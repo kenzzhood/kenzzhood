@@ -102,30 +102,8 @@ def _month_labels(grid: list[list[Cell]]) -> list[tuple[int, str]]:
     return labels
 
 
-def _stat_card(
-    x: int,
-    y: int,
-    label: str,
-    value: str,
-    detail: str,
-    accent_class: str,
-    delay: float,
-) -> str:
-    return delayed(
-        f'<rect x="{x}" y="{y}" width="185" height="65" rx="11" '
-        'class="surface" stroke="var(--line)" stroke-width="1"/>'
-        f'<text x="{x + 14}" y="{y + 20}" class="faint" font-size="8" '
-        f'letter-spacing="1.1">{esc(label)}</text>'
-        f'<text x="{x + 14}" y="{y + 44}" class="{accent_class}" '
-        f'font-size="17" font-weight="700">{esc(value)}</text>'
-        f'<text x="{x + 14}" y="{y + 57}" class="muted" font-size="7.8">'
-        f"{esc(detail)}</text>",
-        delay,
-    )
-
-
 def render(data: dict[str, Any], theme_name: str) -> list[str]:
-    """Build one themed telemetry panel."""
+    """Build one themed contribution panel with an inline stats strip."""
     theme = get_theme(theme_name)
     palette = PALETTES[theme_name]
     grid = build_grid(data["days"])
@@ -150,8 +128,12 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
     grid_top = divider_y + 20
     month_label_y = divider_y + 14
     legend_y = grid_top + 95
-    stat_y = grid_top + 125
-    height = stat_y + 65 + 32
+    stats_y = legend_y + 28
+    height = stats_y + 28
+
+    total = int(data["total_contributions"])
+    active = int(data["active_days"])
+    average = data["avg_per_active_day"]
 
     parts: list[str] = [
         premium_svg_open(
@@ -159,7 +141,7 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
             height,
             "GitHub contributions",
             (
-                f"{data['total_contributions']} contributions; current streak "
+                f"{total} contributions; current streak "
                 f"{current_length} {current_unit}; longest streak "
                 f"{longest_length} {longest_unit}."
             ),
@@ -201,7 +183,7 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
     legend_x = 700
     parts.append(
         f'<text x="{legend_x - 10}" y="{legend_y + 8}" class="faint" '
-        'font-size="7.5" text-anchor="end">LESS</text>'
+        'font-size="7.5" text-anchor="end">Less</text>'
     )
     for index, color in enumerate(palette):
         parts.append(
@@ -210,22 +192,30 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
         )
     parts.append(
         f'<text x="{legend_x + 79}" y="{legend_y + 8}" class="faint" '
-        'font-size="7.5">MORE</text>'
+        'font-size="7.5">More</text>'
     )
 
-    total = int(data["total_contributions"])
-    active = int(data["active_days"])
-    current = current_length
-    longest = longest_length
-    average = data["avg_per_active_day"]
-
-    parts.extend(
-        [
-            _stat_card(32, stat_y, "CONTRIBUTIONS", f"{total:,}", "last 12 months", "green", 0.38),
-            _stat_card(231, stat_y, "ACTIVE DAYS", str(active), f"{average} avg / active day", "cyan", 0.46),
-            _stat_card(430, stat_y, "CURRENT STREAK", f"{current}d", "ongoing", "violet", 0.54),
-            _stat_card(629, stat_y, "LONGEST STREAK", f"{longest}d", "best stretch", "green", 0.62),
-        ]
+    # Single quiet stats strip — one accent, no nested dashboard cards.
+    parts.append(
+        delayed(
+            f'<text x="32" y="{stats_y}" class="text" font-size="12">'
+            f'<tspan class="green" font-weight="700">{total:,}</tspan>'
+            f'<tspan class="muted"> contributions</tspan>'
+            f'<tspan class="faint">  ·  </tspan>'
+            f'<tspan class="text" font-weight="700">{active}</tspan>'
+            f'<tspan class="muted"> active days</tspan>'
+            f'<tspan class="faint">  ·  </tspan>'
+            f'<tspan class="text" font-weight="700">{current_length}d</tspan>'
+            f'<tspan class="muted"> current</tspan>'
+            f'<tspan class="faint">  ·  </tspan>'
+            f'<tspan class="text" font-weight="700">{longest_length}d</tspan>'
+            f'<tspan class="muted"> longest</tspan>'
+            f'<tspan class="faint">  ·  </tspan>'
+            f'<tspan class="muted">{average} avg / day</tspan>'
+            "</text>",
+            0.4,
+            "fade",
+        )
     )
 
     parts.append("</svg>")

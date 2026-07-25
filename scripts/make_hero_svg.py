@@ -22,7 +22,6 @@ from common import (
 )
 from config import (
     CANVAS_WIDTH,
-    CERTIFICATION,
     COMPANY,
     HERO_DARK_SVG,
     HERO_LIGHT_SVG,
@@ -39,10 +38,10 @@ from config import (
 logger = setup_logging("make_hero")
 
 WIDTH = CANVAS_WIDTH
-HEIGHT = 400
+HEIGHT = 380
 
 
-def portrait_rows(path: Path, cols: int = 44, rows: int = 30) -> list[str]:
+def portrait_rows(path: Path, cols: int = 44, rows: int = 28) -> list[str]:
     """Convert the preprocessed portrait to a compact ASCII field."""
     if not path.is_file():
         raise FileNotFoundError(
@@ -180,14 +179,13 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
             f"{esc(line)}</text>"
         )
 
-    cert_y = panel_y + panel_h - 20
+    # Soft live indicator under the portrait — cert already appears in proof points.
+    status_y = panel_y + panel_h - 18
     parts.append(
-        f'<line x1="{art_x}" y1="{cert_y - 16}" x2="{PANEL_X + panel_w - 18}" '
-        f'y2="{cert_y - 16}" class="lineSoft" stroke-width="1"/>'
         f'<g class="fade" style="animation-delay:.95s">'
-        f'<circle cx="{art_x + 3}" cy="{cert_y}" r="3" class="green pulse"/>'
-        f'<text x="{art_x + 13}" y="{cert_y + 4}" class="muted" font-size="9.5">'
-        f"{esc(CERTIFICATION.split(' — ')[0])}</text>"
+        f'<circle cx="{art_x + 3}" cy="{status_y}" r="3" class="green pulse"/>'
+        f'<text x="{art_x + 13}" y="{status_y + 4}" class="muted" font-size="9.5">'
+        f"building @ {esc(COMPANY)}</text>"
         "</g>"
     )
 

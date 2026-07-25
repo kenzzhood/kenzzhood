@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate capability and research maps in paired theme variants."""
+"""Generate a flat three-column skills panel (no nested cards)."""
 
 from __future__ import annotations
 
@@ -18,7 +18,6 @@ from common import (
     premium_svg_open,
     section_header,
     setup_logging,
-    truncate,
     write_svg,
 )
 from config import (
@@ -37,17 +36,18 @@ WIDTH = CANVAS_WIDTH
 
 
 def render_capabilities(theme_name: str) -> list[str]:
-    """Render the three-domain capability matrix."""
+    """Render three flat skill columns — title, statement, chips. No nested boxes."""
     header, divider_y = section_header(
         WIDTH,
         "What I build with",
-        "Vision, spatial interfaces, and AI systems shipped as real products.",
+        "Vision, spatial interfaces, and AI systems shipped as products.",
     )
-    card_y = divider_y + 28
-    card_w = 252
-    card_h = 232
-    gap = 20
-    height = card_y + card_h + PAD
+    col_top = divider_y + 28
+    col_w = 248
+    gap = 26
+    # statement (2 lines) + chips (2 rows) + breathing room
+    col_h = 148
+    height = col_top + col_h + PAD
 
     parts: list[str] = [
         premium_svg_open(
@@ -60,70 +60,58 @@ def render_capabilities(theme_name: str) -> list[str]:
     ]
     parts.extend(premium_frame(WIDTH, height))
     parts.append(header)
+
     for index, group in enumerate(CAPABILITY_GROUPS):
-        x = PAD + index * (card_w + gap)
-        accent_class = ("green", "cyan", "violet")[index]
-        tools = group["tools"]
-        pipeline = group["pipeline"]
+        x = PAD + index * (col_w + gap)
+        accent = ("green", "cyan", "violet")[index]
+        tools = list(group["tools"])
         statement_lines = textwrap.wrap(
             str(group["statement"]),
             width=34,
             break_long_words=False,
         )[:2]
 
-        card = [
-            f'<rect x="{x}" y="{card_y}" width="{card_w}" height="{card_h}" '
-            'rx="12" class="surface" stroke="var(--line)" stroke-width="1"/>',
-            f'<text x="{x + 18}" y="{card_y + 28}" class="{accent_class}" '
-            f'font-size="10">{esc(group["index"])}  {esc(group["name"])}</text>',
-            f'<text x="{x + 18}" y="{card_y + 58}" class="text" '
-            f'font-size="12" font-weight="700">{esc(statement_lines[0])}</text>',
-            f'<text x="{x + 18}" y="{card_y + 78}" class="muted" font-size="11">'
-            f'{esc(statement_lines[1] if len(statement_lines) > 1 else "")}</text>',
-            f'<line x1="{x + 18}" y1="{card_y + 96}" x2="{x + card_w - 18}" '
-            f'y2="{card_y + 96}" class="lineSoft" stroke-width="1"/>',
-        ]
-
-        pipe_y = card_y + 126
-        node_w = 62
-        for pipe_index, item in enumerate(pipeline):
-            node_x = x + 18 + pipe_index * 72
-            card.append(
-                f'<rect x="{node_x}" y="{pipe_y - 16}" width="{node_w}" height="28" '
-                'rx="6" class="surface2" stroke="var(--line)" stroke-width=".8"/>'
-                f'<text x="{node_x + node_w / 2}" y="{pipe_y + 2}" class="text" '
-                f'font-size="9" text-anchor="middle">{esc(item)}</text>'
+        # Soft column separator (not a card border)
+        if index > 0:
+            parts.append(
+                f'<line x1="{x - gap / 2:.1f}" y1="{col_top}" '
+                f'x2="{x - gap / 2:.1f}" y2="{col_top + col_h - 8}" '
+                'class="lineSoft" stroke-width="1"/>'
             )
-            if pipe_index < len(pipeline) - 1:
-                card.append(
-                    f'<path d="M{node_x + node_w + 3} {pipe_y - 2}h7" '
-                    'class="line" stroke-width="1" fill="none"/>'
-                )
 
-        card.append(
-            f'<text x="{x + 18}" y="{card_y + 172}" class="faint" '
-            'font-size="9">Stack</text>'
-        )
-        chip_x = x + 18.0
-        chip_y = card_y + 182.0
-        row_start_x = chip_x
+        column = [
+            f'<text x="{x}" y="{col_top + 14}" class="{accent}" font-size="10" '
+            f'letter-spacing="1">{esc(group["index"])}</text>',
+            f'<text x="{x + 28}" y="{col_top + 14}" class="text" font-size="13" '
+            f'font-weight="700">{esc(group["name"])}</text>',
+        ]
+        for line_i, line in enumerate(statement_lines):
+            column.append(
+                f'<text x="{x}" y="{col_top + 44 + line_i * 18}" class="muted" '
+                f'font-size="11.5">{esc(line)}</text>'
+            )
+
+        # Fixed chip baseline so all three columns align regardless of copy length.
+        chip_x = float(x)
+        chip_y = float(col_top + 92)
+        row_start = chip_x
         for tool in tools:
-            markup, chip_w = chip(chip_x, chip_y, tool, height=21)
-            if chip_x + chip_w > x + card_w - 14:
-                chip_x = row_start_x
-                chip_y += 27
-                markup, chip_w = chip(chip_x, chip_y, tool, height=21)
-            card.append(markup)
+            markup, chip_w = chip(chip_x, chip_y, tool, height=22)
+            if chip_x + chip_w > x + col_w:
+                chip_x = row_start
+                chip_y += 28
+                markup, chip_w = chip(chip_x, chip_y, tool, height=22)
+            column.append(markup)
             chip_x += chip_w + 7
 
-        parts.append(delayed("".join(card), 0.16 + index * 0.1))
+        parts.append(delayed("".join(column), 0.14 + index * 0.08))
 
     parts.append("</svg>")
     return parts
 
 
 def render_research(theme_name: str) -> list[str]:
-    """Render the research-to-product pipeline."""
+    """Keep a light research strip available for optional use."""
     header, divider_y = section_header(
         WIDTH,
         "From pixels to presence",
@@ -147,19 +135,18 @@ def render_research(theme_name: str) -> list[str]:
     parts.extend(premium_frame(WIDTH, height))
     parts.append(header)
 
-    start_x = PAD
     for index, item in enumerate(RESEARCH_PIPELINE):
-        x = start_x + index * (node_w + gap)
-        accent_class = ("green", "cyan", "violet", "green")[index]
+        x = PAD + index * (node_w + gap)
+        accent = ("green", "cyan", "violet", "green")[index]
         inner = (
             f'<rect x="{x}" y="{node_y}" width="{node_w}" height="86" rx="12" '
             'class="surface" stroke="var(--line)" stroke-width="1"/>'
-            f'<text x="{x + 15}" y="{node_y + 24}" class="{accent_class}" '
+            f'<text x="{x + 15}" y="{node_y + 24}" class="{accent}" '
             f'font-size="10">{esc(item["step"])}</text>'
             f'<text x="{x + 15}" y="{node_y + 48}" class="text" '
             f'font-size="13" font-weight="700">{esc(item["title"])}</text>'
             f'<text x="{x + 15}" y="{node_y + 70}" class="muted" '
-            f'font-size="10">{esc(truncate(item["detail"], 28))}</text>'
+            f'font-size="10">{esc(item["detail"])}</text>'
         )
         parts.append(delayed(inner, 0.16 + index * 0.08))
         if index < len(RESEARCH_PIPELINE) - 1:

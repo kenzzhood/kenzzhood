@@ -12,22 +12,18 @@ from common import setup_logging
 from config import (
     CANVAS_WIDTH,
     CASE_STUDIES,
-    CERTIFICATION,
     COMPANY,
     CONTACT,
-    FOUNDER_THESIS,
-    FRAMEWORKS,
     INCUBATED_AT,
-    LANGUAGES,
     NAME,
-    POSITIONING,
     PUBLICATION,
     ROLE,
     ROOT,
-    SLOGANS,
 )
 
 logger = setup_logging("render_readme")
+
+PROJECT_TILE_WIDTH = 406
 
 
 def picture(dark: str, light: str, alt: str, width: int = CANVAS_WIDTH) -> str:
@@ -40,9 +36,6 @@ def picture(dark: str, light: str, alt: str, width: int = CANVAS_WIDTH) -> str:
         f'  <img src="{dark}" width="{width}" alt="{safe_alt}">\n'
         "</picture>"
     )
-
-
-PROJECT_TILE_WIDTH = 406
 
 
 def project_tile(project: dict[str, object]) -> str:
@@ -60,26 +53,39 @@ def project_tile(project: dict[str, object]) -> str:
 
 
 def project_grid(projects: list[dict[str, object]]) -> str:
-    """Lay projects out two-up so the grid reads as a portfolio, not a list."""
-    rows = []
+    """Lay projects out two-up with a real gutter via an HTML table."""
+    rows: list[str] = []
     for start in range(0, len(projects), 2):
         pair = projects[start : start + 2]
-        tiles = "\n".join(project_tile(project) for project in pair)
-        rows.append(f'<div align="center">\n\n{tiles}\n\n</div>')
-    return "\n\n<br>\n\n".join(rows)
+        cells = []
+        for project in pair:
+            cells.append(
+                f'<td width="50%" valign="top">{project_tile(project)}</td>'
+            )
+        if len(pair) == 1:
+            cells.append('<td width="50%"></td>')
+        rows.append("<tr>\n" + "\n".join(cells) + "\n</tr>")
+    body = "\n".join(rows)
+    return (
+        '<table width="100%" cellspacing="0" cellpadding="8">\n'
+        f"{body}\n"
+        "</table>"
+    )
 
 
 def render() -> str:
-    """Compose a developer-first profile README."""
+    """Compose a calm, developer-first profile README with no duplicated hero copy."""
     projects = project_grid(CASE_STUDIES)
-    languages = " · ".join(LANGUAGES)
-    frameworks = " · ".join(FRAMEWORKS)
-    slogans = " · ".join(SLOGANS)
 
     hero = picture(
         "./assets/hero-dark.svg",
         "./assets/hero-light.svg",
         f"{NAME}, {ROLE}",
+    )
+    publication = picture(
+        "./assets/publication-dark.svg",
+        "./assets/publication-light.svg",
+        f"IEEE publication — {PUBLICATION['venue']}",
     )
     capabilities = picture(
         "./assets/capabilities-dark.svg",
@@ -91,6 +97,7 @@ def render() -> str:
         "./assets/contribution-light.svg",
         "GitHub contribution graph refreshed daily",
     )
+    pub_url = html.escape(PUBLICATION["url"], quote=True)
 
     return f"""<div align="center">
 
@@ -103,72 +110,52 @@ def render() -> str:
 
 <br>
 
-**{html.escape(slogans)}**
-
-{html.escape(POSITIONING)}
-
-<sub>{html.escape(FOUNDER_THESIS)}</sub>
-
-<br><br>
-
-<a href="mailto:{CONTACT["email"]}">Email</a> ·
-<a href="{CONTACT["linkedin"]}">LinkedIn</a> ·
-<a href="{CONTACT["github"]}">GitHub</a> ·
-<a href="{CONTACT["portfolio"]}">Portfolio</a> ·
+<a href="mailto:{CONTACT["email"]}">Email</a>
+&nbsp;·&nbsp;
+<a href="{CONTACT["linkedin"]}">LinkedIn</a>
+&nbsp;·&nbsp;
+<a href="{CONTACT["github"]}">GitHub</a>
+&nbsp;·&nbsp;
+<a href="{CONTACT["portfolio"]}">Portfolio</a>
+&nbsp;·&nbsp;
 <a href="{CONTACT["company"]}">{html.escape(COMPANY)}</a>
 
 </div>
 
 <br>
 
-## Projects
-
-Systems I've designed, built, and shipped.
+### Featured work
 
 {projects}
 
 <br>
 
-## Publication
+### Publication
 
-**[{html.escape(PUBLICATION["title"])}]({PUBLICATION["url"]})**<br>
-{html.escape(PUBLICATION["venue"])} · [code](https://github.com/kenzzhood/MILES)
+<a href="{pub_url}">
+{publication}
+</a>
 
 <br>
 
-## Skills
+### Skills
 
 {capabilities}
 
 <br>
 
-## Activity
+### Activity
 
 {telemetry}
-
-<br>
-
-## Stack
-
-**Languages** — {html.escape(languages)}
-
-**Frameworks & tools** — {html.escape(frameworks)}
-
-**Certification** — {html.escape(CERTIFICATION)}
 
 <br>
 
 <div align="center">
 
 <sub>
-Founder, <a href="{CONTACT["company"]}">{html.escape(COMPANY)}</a> ·
-Incubated at {html.escape(INCUBATED_AT)}
-</sub>
-
-<br>
-
-<sub>
-<a href="mailto:{CONTACT["email"]}">{html.escape(CONTACT["email"])}</a>
+Founder, <a href="{CONTACT["company"]}">{html.escape(COMPANY)}</a>
+· Incubated at {html.escape(INCUBATED_AT)}
+· <a href="mailto:{CONTACT["email"]}">{html.escape(CONTACT["email"])}</a>
 </sub>
 
 </div>

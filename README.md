@@ -13,70 +13,64 @@
 
 <br>
 
-**Making Retail Intelligent · Your Vision, Our Technology**
-
-Computer vision, XR, and multimodal AI systems—designed, built, and shipped end to end.
-
-<sub>Founder, InnoXR Labs. Incubated at IITMIC · NSRCEL · iTNT · Sathyabama.</sub>
-
-<br><br>
-
-<a href="mailto:gtkgoutham@gmail.com">Email</a> ·
-<a href="https://www.linkedin.com/in/goutham-srinath-380446288">LinkedIn</a> ·
-<a href="https://github.com/kenzzhood">GitHub</a> ·
-<a href="https://goutham.netlify.app">Portfolio</a> ·
+<a href="mailto:gtkgoutham@gmail.com">Email</a>
+&nbsp;·&nbsp;
+<a href="https://www.linkedin.com/in/goutham-srinath-380446288">LinkedIn</a>
+&nbsp;·&nbsp;
+<a href="https://github.com/kenzzhood">GitHub</a>
+&nbsp;·&nbsp;
+<a href="https://goutham.netlify.app">Portfolio</a>
+&nbsp;·&nbsp;
 <a href="https://innoxrlabs.com">InnoXR Labs</a>
 
 </div>
 
 <br>
 
-## Projects
+### Featured work
 
-Systems I've designed, built, and shipped.
-
-<div align="center">
-
-<a href="https://github.com/kenzzhood/MILES"><picture>
+<table width="100%" cellspacing="0" cellpadding="8">
+<tr>
+<td width="50%" valign="top"><a href="https://github.com/kenzzhood/MILES"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/miles-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/miles-light.svg">
   <img src="./assets/projects/miles-dark.svg" width="406" alt="HoloInteract / MILES — project overview">
-</picture></a>
-<a href="https://github.com/kenzzhood/AuraFit"><picture>
+</picture></a></td>
+<td width="50%" valign="top"><a href="https://github.com/kenzzhood/AuraFit"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/aurafit-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/aurafit-light.svg">
   <img src="./assets/projects/aurafit-dark.svg" width="406" alt="AuraFit — project overview">
-</picture></a>
-
-</div>
-
-<br>
-
-<div align="center">
-
-<a href="https://github.com/kenzzhood/AutoOps"><picture>
+</picture></a></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><a href="https://github.com/kenzzhood/AutoOps"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/autoops-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/autoops-light.svg">
   <img src="./assets/projects/autoops-dark.svg" width="406" alt="AutoOps AI — project overview">
-</picture></a>
-<a href="https://github.com/kenzzhood/Wander_Lens"><picture>
+</picture></a></td>
+<td width="50%" valign="top"><a href="https://github.com/kenzzhood/Wander_Lens"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/wander-lens-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/wander-lens-light.svg">
   <img src="./assets/projects/wander-lens-dark.svg" width="406" alt="Wander Lens — project overview">
-</picture></a>
-
-</div>
-
-<br>
-
-## Publication
-
-**[MILES: Multimodal Intelligent Assistant for 3D Model Generation and Holographic Interaction Using Voice and Gesture Control](https://doi.org/10.1109/RMKMATE69073.2026.11518707)**<br>
-IEEE, 2026 · [code](https://github.com/kenzzhood/MILES)
+</picture></a></td>
+</tr>
+</table>
 
 <br>
 
-## Skills
+### Publication
+
+<a href="https://doi.org/10.1109/RMKMATE69073.2026.11518707">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/publication-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/publication-light.svg">
+  <img src="./assets/publication-dark.svg" width="860" alt="IEEE publication — IEEE, 2026">
+</picture>
+</a>
+
+<br>
+
+### Skills
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/capabilities-dark.svg">
@@ -86,7 +80,7 @@ IEEE, 2026 · [code](https://github.com/kenzzhood/MILES)
 
 <br>
 
-## Activity
+### Activity
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/contribution-dark.svg">
@@ -96,27 +90,12 @@ IEEE, 2026 · [code](https://github.com/kenzzhood/MILES)
 
 <br>
 
-## Stack
-
-**Languages** — Python · C++ · C# · TypeScript · JavaScript · Dart · Java
-
-**Frameworks & tools** — Unity · Next.js · React · FastAPI · Flutter · Azure OpenAI · LangChain · Hugging Face · Docker
-
-**Certification** — Unity Certified Associate — Game Developer
-
-<br>
-
 <div align="center">
 
 <sub>
-Founder, <a href="https://innoxrlabs.com">InnoXR Labs</a> ·
-Incubated at IITMIC · NSRCEL · iTNT · Sathyabama
-</sub>
-
-<br>
-
-<sub>
-<a href="mailto:gtkgoutham@gmail.com">gtkgoutham@gmail.com</a>
+Founder, <a href="https://innoxrlabs.com">InnoXR Labs</a>
+· Incubated at IITMIC · NSRCEL · iTNT · Sathyabama
+· <a href="mailto:gtkgoutham@gmail.com">gtkgoutham@gmail.com</a>
 </sub>
 
 </div>

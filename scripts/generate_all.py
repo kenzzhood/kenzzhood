@@ -7,10 +7,11 @@ Runs (in order):
   2. make_hero_svg
   3. make_capabilities_svg
   4. make_projects_svg
-  5. fetch_contributions (optional — skip with --skip-network)
-  6. render_heatmap_svg
-  7. render_readme
-  8. validate_profile
+  5. make_publication_svg
+  6. fetch_contributions (optional — skip with --skip-network)
+  7. render_heatmap_svg
+  8. render_readme
+  9. validate_profile
 
 Usage
 -----
@@ -81,6 +82,7 @@ def main(argv: list[str] | None = None) -> int:
         run_script("make_hero_svg.py")
         run_script("make_capabilities_svg.py")
         run_script("make_projects_svg.py")
+        run_script("make_publication_svg.py")
         if not args.skip_network:
             run_script("fetch_contributions.py")
         run_script("render_heatmap_svg.py")
