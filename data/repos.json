@@ -1,0 +1,70 @@
+{
+  "username": "kenzzhood",
+  "generated_at": "2026-07-25T16:07:20Z",
+  "repos": [
+    {
+      "name": "AutoOps",
+      "description": "Autonomous observability CLI \u2014 Splunk + OpenTelemetry + AI-driven incident RCA for any codebase",
+      "url": "https://github.com/kenzzhood/AutoOps",
+      "language": "Python",
+      "stars": 0,
+      "updated_at": "2026-06-14T22:16:05Z"
+    },
+    {
+      "name": "AuraFit",
+      "description": "",
+      "url": "https://github.com/kenzzhood/AuraFit",
+      "language": "TypeScript",
+      "stars": 0,
+      "updated_at": "2026-06-10T06:16:17Z"
+    },
+    {
+      "name": "3D-Hand-Tracking",
+      "description": "",
+      "url": "https://github.com/kenzzhood/3D-Hand-Tracking",
+      "language": null,
+      "stars": 1,
+      "updated_at": "2026-04-19T09:09:52Z"
+    },
+    {
+      "name": "MILES",
+      "description": "",
+      "url": "https://github.com/kenzzhood/MILES",
+      "language": "Python",
+      "stars": 0,
+      "updated_at": "2026-03-28T19:14:23Z"
+    },
+    {
+      "name": "holointeract-monitor",
+      "description": "",
+      "url": "https://github.com/kenzzhood/holointeract-monitor",
+      "language": "JavaScript",
+      "stars": 0,
+      "updated_at": "2026-02-05T06:43:15Z"
+    },
+    {
+      "name": "Atoms-Vision-Audit",
+      "description": "the delivery god  ",
+      "url": "https://github.com/kenzzhood/Atoms-Vision-Audit",
+      "language": "TypeScript",
+      "stars": 0,
+      "updated_at": "2025-12-28T15:11:43Z"
+    },
+    {
+      "name": "New_portfolio",
+      "description": "",
+      "url": "https://github.com/kenzzhood/New_portfolio",
+      "language": "TypeScript",
+      "stars": 0,
+      "updated_at": "2025-11-13T18:14:45Z"
+    },
+    {
+      "name": "Pandas",
+      "description": "",
+      "url": "https://github.com/kenzzhood/Pandas",
+      "language": "TypeScript",
+      "stars": 0,
+      "updated_at": "2025-10-16T08:20:47Z"
+    }
+  ]
+}

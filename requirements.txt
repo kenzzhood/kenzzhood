@@ -1,0 +1,8 @@
+# Full toolchain (local portrait + heatmap generation)
+requests==2.32.3
+beautifulsoup4==4.12.3
+pillow==11.1.0
+numpy==2.2.3
+opencv-python-headless==4.11.0.86
+rembg==2.0.62
+onnxruntime==1.28.0

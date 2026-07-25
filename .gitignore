@@ -1,0 +1,31 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local secrets / env
+.env
+.env.*
+
+# Temp / model caches (rembg / onnx)
+*.onnx
+.u2net/
+tmp/
+.cache/
+
+# Generated intermediates (keep committed SVGs & JSON for the profile)
+# Uncomment to ignore prepped raster if you prefer regenerating locally:
+# assets/profile-prepped.png
