@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate capability and research-system maps in paired theme variants."""
+"""Generate capability and research maps in paired theme variants."""
 
 from __future__ import annotations
 
@@ -35,40 +35,40 @@ WIDTH = CANVAS_WIDTH
 
 def _section_header(kicker: str, title: str, subtitle: str) -> str:
     return (
-        f'<text x="32" y="37" class="green" font-size="9.5" '
-        f'letter-spacing="1.8">{esc(kicker)}</text>'
-        f'<text x="32" y="72" class="text" font-size="23" '
+        f'<text x="32" y="36" class="green" font-size="10">'
+        f"{esc(kicker)}</text>"
+        f'<text x="32" y="68" class="text" font-size="22" '
         f'font-weight="700">{esc(title)}</text>'
-        f'<text x="32" y="96" class="muted" font-size="11.5">{esc(subtitle)}</text>'
-        '<line x1="32" y1="116" x2="828" y2="116" class="line draw" '
-        'pathLength="1" stroke-width="1" style="animation-delay:.12s"/>'
+        f'<text x="32" y="92" class="muted" font-size="12">{esc(subtitle)}</text>'
+        '<line x1="32" y1="112" x2="828" y2="112" class="line draw" '
+        'pathLength="1" stroke-width="1" style="animation-delay:.1s"/>'
     )
 
 
 def render_capabilities(theme_name: str) -> list[str]:
     """Render the three-domain capability matrix."""
-    height = 430
+    height = 400
     parts: list[str] = [
         premium_svg_open(
             WIDTH,
             height,
-            "Engineering capability matrix",
-            "Computer vision, spatial computing, and AI systems capabilities.",
+            "What I build",
+            "Vision and 3D, spatial XR, and AI product systems.",
         ),
         premium_css(get_theme(theme_name)),
     ]
-    parts.extend(premium_frame(WIDTH, height, grid=False))
+    parts.extend(premium_frame(WIDTH, height))
     parts.append(
         _section_header(
-            "CAPABILITY MATRIX // SYSTEMS I BUILD",
-            "From perception to interaction.",
-            "Three disciplines, designed as one connected engineering stack.",
+            "Focus",
+            "Where the work sits.",
+            "Vision, spatial interfaces, and AI systems shipping as products.",
         )
     )
 
-    card_y = 140
+    card_y = 136
     card_w = 252
-    card_h = 250
+    card_h = 232
     gap = 20
     for index, group in enumerate(CAPABILITY_GROUPS):
         x = 32 + index * (card_w + gap)
@@ -83,27 +83,26 @@ def render_capabilities(theme_name: str) -> list[str]:
 
         card = [
             f'<rect x="{x}" y="{card_y}" width="{card_w}" height="{card_h}" '
-            'rx="14" class="surface" stroke="var(--line)" stroke-width="1"/>',
+            'rx="12" class="surface" stroke="var(--line)" stroke-width="1"/>',
             f'<text x="{x + 18}" y="{card_y + 28}" class="{accent_class}" '
-            f'font-size="9.5" letter-spacing="1.4">{esc(group["index"])} '
-            f'/ {esc(group["name"])}</text>',
-            f'<text x="{x + 18}" y="{card_y + 59}" class="text" '
-            f'font-size="11.5" font-weight="700">{esc(statement_lines[0])}</text>',
-            f'<text x="{x + 18}" y="{card_y + 78}" class="muted" font-size="10.5">'
+            f'font-size="10">{esc(group["index"])}  {esc(group["name"])}</text>',
+            f'<text x="{x + 18}" y="{card_y + 58}" class="text" '
+            f'font-size="12" font-weight="700">{esc(statement_lines[0])}</text>',
+            f'<text x="{x + 18}" y="{card_y + 78}" class="muted" font-size="11">'
             f'{esc(statement_lines[1] if len(statement_lines) > 1 else "")}</text>',
-            f'<line x1="{x + 18}" y1="{card_y + 99}" x2="{x + card_w - 18}" '
-            f'y2="{card_y + 99}" class="lineSoft" stroke-width="1"/>',
+            f'<line x1="{x + 18}" y1="{card_y + 96}" x2="{x + card_w - 18}" '
+            f'y2="{card_y + 96}" class="lineSoft" stroke-width="1"/>',
         ]
 
-        pipe_y = card_y + 130
-        node_w = 60
+        pipe_y = card_y + 126
+        node_w = 62
         for pipe_index, item in enumerate(pipeline):
             node_x = x + 18 + pipe_index * 72
             card.append(
                 f'<rect x="{node_x}" y="{pipe_y - 16}" width="{node_w}" height="28" '
                 'rx="6" class="surface2" stroke="var(--line)" stroke-width=".8"/>'
                 f'<text x="{node_x + node_w / 2}" y="{pipe_y + 2}" class="text" '
-                f'font-size="8.5" text-anchor="middle">{esc(item)}</text>'
+                f'font-size="9" text-anchor="middle">{esc(item)}</text>'
             )
             if pipe_index < len(pipeline) - 1:
                 card.append(
@@ -112,98 +111,72 @@ def render_capabilities(theme_name: str) -> list[str]:
                 )
 
         card.append(
-            f'<text x="{x + 18}" y="{card_y + 180}" class="faint" '
-            'font-size="8.5" letter-spacing="1.1">OPERATING LAYER</text>'
+            f'<text x="{x + 18}" y="{card_y + 170}" class="faint" '
+            'font-size="9">Stack</text>'
         )
         for tool_index, tool in enumerate(tools):
             col = tool_index % 2
             row = tool_index // 2
             tool_x = x + 18 + col * 110
-            tool_y = card_y + 205 + row * 25
+            tool_y = card_y + 194 + row * 22
             card.append(
-                f'<circle cx="{tool_x + 3}" cy="{tool_y - 3}" r="2" '
-                f'class="{accent_class}"/>'
-                f'<text x="{tool_x + 12}" y="{tool_y}" class="muted" '
-                f'font-size="9.5">{esc(tool)}</text>'
+                f'<text x="{tool_x}" y="{tool_y}" class="muted" '
+                f'font-size="10.5">{esc(tool)}</text>'
             )
 
-        parts.append(delayed("".join(card), 0.2 + index * 0.12))
+        parts.append(delayed("".join(card), 0.16 + index * 0.1))
 
-    parts.append(
-        delayed(
-            '<text x="32" y="415" class="faint" font-size="8.5" '
-            'letter-spacing="1.2">DESIGN PRINCIPLE</text>'
-            '<text x="151" y="415" class="muted" font-size="9.5">'
-            "build the complete loop — sense, reason, render, act</text>",
-            0.65,
-            "fade",
-        )
-    )
     parts.append("</svg>")
     return parts
 
 
 def render_research(theme_name: str) -> list[str]:
     """Render the research-to-product pipeline."""
-    height = 278
+    height = 250
     parts: list[str] = [
         premium_svg_open(
             WIDTH,
             height,
-            "Research frontier",
-            (
-                "A pipeline connecting computer vision, 3D reconstruction, "
-                "agentic AI, spatial systems, and robotics."
-            ),
+            "Research path",
+            "From perception and 3D reconstruction to multimodal AI and spatial UX.",
         ),
         premium_css(get_theme(theme_name)),
     ]
-    parts.extend(premium_frame(WIDTH, height, grid=True))
+    parts.extend(premium_frame(WIDTH, height))
     parts.append(
         _section_header(
-            "RESEARCH FRONTIER // CURRENT TRAJECTORY",
-            "Machines that understand space.",
-            "My research path connects perception, reconstruction, reasoning, and action.",
+            "Research",
+            "From pixels to presence.",
+            "The same loop shows up in retail XR, holography, and product AI.",
         )
     )
 
     start_x = 32
-    node_y = 146
+    node_y = 132
     node_w = 184
     gap = 20
     for index, item in enumerate(RESEARCH_PIPELINE):
         x = start_x + index * (node_w + gap)
         accent_class = ("green", "cyan", "violet", "green")[index]
         inner = (
-            f'<rect x="{x}" y="{node_y}" width="{node_w}" height="94" rx="12" '
+            f'<rect x="{x}" y="{node_y}" width="{node_w}" height="86" rx="12" '
             'class="surface" stroke="var(--line)" stroke-width="1"/>'
             f'<text x="{x + 15}" y="{node_y + 24}" class="{accent_class}" '
-            f'font-size="8.5" letter-spacing="1.2">{index + 1:02d} · '
-            f'{esc(item["step"])}</text>'
-            f'<text x="{x + 15}" y="{node_y + 49}" class="text" '
-            f'font-size="12" font-weight="700">{esc(item["title"])}</text>'
+            f'font-size="10">{esc(item["step"])}</text>'
+            f'<text x="{x + 15}" y="{node_y + 48}" class="text" '
+            f'font-size="13" font-weight="700">{esc(item["title"])}</text>'
             f'<text x="{x + 15}" y="{node_y + 70}" class="muted" '
-            f'font-size="8.8">{esc(truncate(item["detail"], 27))}</text>'
+            f'font-size="10">{esc(truncate(item["detail"], 28))}</text>'
         )
-        parts.append(delayed(inner, 0.2 + index * 0.1))
+        parts.append(delayed(inner, 0.16 + index * 0.08))
         if index < len(RESEARCH_PIPELINE) - 1:
             arrow_x = x + node_w
             parts.append(
-                f'<path d="M{arrow_x + 3} {node_y + 47}h14l-4-4m4 4-4 4" '
+                f'<path d="M{arrow_x + 3} {node_y + 43}h14l-4-4m4 4-4 4" '
                 'fill="none" class="line draw" pathLength="1" stroke-width="1" '
-                f'style="animation-delay:{0.35 + index * 0.1:.2f}s"/>'
+                f'style="animation-delay:{0.3 + index * 0.08:.2f}s"/>'
             )
 
-    parts.append(
-        delayed(
-            '<text x="32" y="262" class="faint" font-size="8.5" '
-            'letter-spacing="1.2">NORTH STAR</text>'
-            '<text x="122" y="262" class="muted" font-size="9.5">'
-            "intelligence that is grounded in the physical world</text>",
-            0.66,
-            "fade",
-        )
-    )
     parts.append("</svg>")
     return parts
 

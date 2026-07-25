@@ -159,25 +159,21 @@ def premium_frame(
     width: int,
     height: int,
     *,
-    radius: int = 18,
-    grid: bool = True,
+    radius: int = 16,
+    grid: bool = False,
 ) -> list[str]:
-    """Return the flat premium background, border, and optional spatial grid."""
+    """Return a quiet panel background with a single hairline border."""
     parts = [
         f'<rect class="bg" width="{width}" height="{height}" rx="{radius}"/>',
         f'<rect x=".5" y=".5" width="{width - 1}" height="{height - 1}" '
         f'rx="{radius}" fill="none" class="line" stroke-width="1"/>',
     ]
     if grid:
-        for x in range(32, width, 48):
+        # Sparse guide lines only — avoid the dense “AI dashboard” lattice.
+        for x in range(80, width, 120):
             parts.append(
-                f'<line x1="{x}" y1="0" x2="{x}" y2="{height}" '
-                'class="lineSoft" stroke-width=".6" opacity=".28"/>'
-            )
-        for y in range(32, height, 48):
-            parts.append(
-                f'<line x1="0" y1="{y}" x2="{width}" y2="{y}" '
-                'class="lineSoft" stroke-width=".6" opacity=".28"/>'
+                f'<line x1="{x}" y1="24" x2="{x}" y2="{height - 24}" '
+                'class="lineSoft" stroke-width=".7" opacity=".22"/>'
             )
     return parts
 

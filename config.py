@@ -44,14 +44,15 @@ QUOTES_JSON: Path = DATA_DIR / "quotes.json"
 # ---------------------------------------------------------------------------
 
 GITHUB_USERNAME: str = "kenzzhood"
-NAME: str = "Goutham Srinath"
+NAME: str = "Goutham Srinath K."
 ROLE: str = "Founder & CEO"
 COMPANY: str = "InnoXR Labs"
 PROMPT_HOST: str = "kenzzhood@github"
+LOCATION: str = "Bengaluru, India"
 
 ABOUT: str = (
-    "Building AI-powered Spatial Computing, Computer Vision, XR, "
-    "and Generative AI products."
+    "Building AI-powered retail engagement and analytics for physical stores "
+    "through interactive 3D experiences and edge AI."
 )
 
 RESEARCH_INTERESTS: list[str] = [
@@ -59,230 +60,201 @@ RESEARCH_INTERESTS: list[str] = [
     "Gaussian Splatting",
     "3D Reconstruction",
     "Spatial Computing",
-    "Robotics",
-    "Generative AI",
+    "Holography",
     "LLMs",
-    "AI Agents",
+    "AR / VR / MR",
 ]
 
 LANGUAGES: list[str] = [
     "Python",
     "C++",
+    "C#",
     "TypeScript",
     "JavaScript",
-    "C#",
+    "Dart",
     "Java",
 ]
 
 FRAMEWORKS: list[str] = [
-    "React",
-    "React Native",
-    "FastAPI",
     "Unity",
-    "OpenCV",
-    "PyTorch",
-    "TensorFlow",
-    "ROS",
+    "Next.js",
+    "React",
+    "FastAPI",
+    "Flutter",
+    "Azure OpenAI",
+    "LangChain",
+    "Hugging Face",
     "Docker",
-]
-
-CURRENTLY_BUILDING: list[str] = [
-    "AI-powered XR experiences @ InnoXR Labs",
-    "Computer vision pipelines for spatial apps",
-    "Generative AI agent tooling",
-]
-
-OPEN_SOURCE: list[str] = [
-    "Vision / XR demos and research tools",
-    "Observability CLI experiments (AutoOps)",
-]
-
-STARTUP: str = "InnoXR Labs — Spatial Computing × AI"
-
-# Featured projects shown in the README (manual curation).
-FEATURED_PROJECTS: list[dict[str, str]] = [
-    {
-        "name": "AutoOps",
-        "desc": "Autonomous observability CLI — Splunk + OpenTelemetry + AI RCA",
-        "url": "https://github.com/kenzzhood/AutoOps",
-    },
-    {
-        "name": "Atoms Vision Audit",
-        "desc": "Computer-vision delivery & quality audit tooling",
-        "url": "https://github.com/kenzzhood/Atoms-Vision-Audit",
-    },
-    {
-        "name": "AuraFit",
-        "desc": "AI fitness experience",
-        "url": "https://github.com/kenzzhood/AuraFit",
-    },
-    {
-        "name": "MOOTVR",
-        "desc": "VR moot-court simulator for law students",
-        "url": "https://github.com/kenzzhood/MOOTVR",
-    },
-    {
-        "name": "Health Intellect",
-        "desc": "Unified AI healthcare records & consults",
-        "url": "https://github.com/kenzzhood/Health-Intellect",
-    },
-    {
-        "name": "3D Hand Tracking",
-        "desc": "Real-time 3D hand tracking experiments",
-        "url": "https://github.com/kenzzhood/3D-Hand-Tracking",
-    },
 ]
 
 CONTACT: dict[str, str] = {
     "github": "https://github.com/kenzzhood",
     "company": "https://innoxrlabs.com",
-    "email": "hello@innoxrlabs.com",
+    "email": "gtkgoutham@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/goutham-srinath-380446288",
+    "portfolio": "https://goutham.netlify.app",
 }
 
+PUBLICATION: dict[str, str] = {
+    "title": (
+        "MILES: Multimodal Intelligent Assistant for 3D Model Generation "
+        "and Holographic Interaction Using Voice and Gesture Control"
+    ),
+    "url": "https://doi.org/10.1109/RMKMATE69073.2026.11518707",
+    "venue": "IEEE, 2026",
+}
+
+HIGHLIGHTS: list[str] = [
+    "Winner, Umagine TN Grand Challenge",
+    "Strategic pilot partnership with TITAN",
+    "Incubated at IIT Madras iTNT Hub, IITM Incubation Cell, and IIMB NSRCEL",
+    "1st place — Agentica 2025, Hack-A-League 3.0, Hackathon SIST 2024",
+    "2nd place, CIIA-5 Mumbai · Top 20 / 4,000, Beyond Tomorrow",
+]
+
 # ---------------------------------------------------------------------------
-# Spatial Command Center — profile narrative and proof
+# Visual profile system
 # ---------------------------------------------------------------------------
 
 CANVAS_WIDTH: int = 860
 
 POSITIONING: str = (
-    "Building spatial intelligence systems where AI can see, understand, "
-    "and interact with the physical world."
+    "AI-powered retail engagement and analytics for physical stores—"
+    "built with interactive 3D, computer vision, and edge AI."
 )
 
 FOUNDER_THESIS: str = (
-    "I work across computer vision, real-time 3D, XR, and agentic AI—"
-    "turning research-heavy ideas into products people can actually use."
+    "Founder of InnoXR Labs. IEEE-published researcher. "
+    "8× national hackathon podium finisher."
 )
 
 PROOF_POINTS: list[dict[str, str]] = [
-    {"label": "OPERATING MODE", "value": "Founder × Engineer × Researcher"},
-    {"label": "BUILDING", "value": "Spatial intelligence @ InnoXR Labs"},
-    {"label": "SYSTEMS", "value": "Vision · XR · AI agents · Real-time 3D"},
+    {"label": "Building", "value": "Atmos OS for offline retail @ InnoXR Labs"},
+    {"label": "Incubated", "value": "IITM iTNT · IITMIC · IIMB NSRCEL"},
+    {"label": "Signal", "value": "TITAN pilot · Umagine TN winner · IEEE"},
 ]
 
 CAPABILITY_GROUPS: list[dict[str, object]] = [
     {
         "index": "01",
-        "name": "COMPUTER VISION",
-        "statement": "Perception systems that turn pixels into spatial understanding.",
-        "pipeline": ["capture", "infer", "reconstruct"],
-        "tools": ["OpenCV", "PyTorch", "TensorFlow", "3D vision"],
+        "name": "Vision & 3D",
+        "statement": "Turn product media and scenes into interactive spatial assets.",
+        "pipeline": ["capture", "reconstruct", "render"],
+        "tools": ["OpenCV", "Gaussian Splats", "Blender", "Unity"],
     },
     {
         "index": "02",
-        "name": "SPATIAL / XR",
-        "statement": "Interfaces that connect digital intelligence to physical space.",
-        "pipeline": ["map", "interact", "simulate"],
-        "tools": ["Unity", "OpenXR", "React Native", "ROS"],
+        "name": "Spatial / XR",
+        "statement": "Ship AR, VR, and holographic experiences people can actually use.",
+        "pipeline": ["sense", "interact", "deploy"],
+        "tools": ["Unity", "ARCore", "MediaPipe", "Flutter"],
     },
     {
         "index": "03",
-        "name": "AI SYSTEMS",
-        "statement": "Agentic products that observe, reason, and take useful action.",
-        "pipeline": ["retrieve", "reason", "act"],
-        "tools": ["FastAPI", "LLMs", "RAG", "Docker"],
+        "name": "AI Products",
+        "statement": "Full-stack systems that reason, retrieve, and take useful action.",
+        "pipeline": ["ingest", "reason", "act"],
+        "tools": ["FastAPI", "LLMs", "RAG", "Azure OpenAI"],
     },
 ]
 
 RESEARCH_PIPELINE: list[dict[str, str]] = [
     {
-        "step": "OBSERVE",
+        "step": "See",
         "title": "Computer Vision",
-        "detail": "Detection · tracking · multimodal perception",
+        "detail": "Perception for retail, travel, and XR",
     },
     {
-        "step": "RECONSTRUCT",
-        "title": "3D Intelligence",
-        "detail": "Gaussian splats · geometry · scene recovery",
+        "step": "Rebuild",
+        "title": "3D Assets",
+        "detail": "Gaussian splats · photogrammetry",
     },
     {
-        "step": "UNDERSTAND",
-        "title": "Agentic AI",
-        "detail": "LLMs · memory · tool use · planning",
+        "step": "Reason",
+        "title": "Multimodal AI",
+        "detail": "LLMs · RAG · voice & gesture",
     },
     {
-        "step": "INTERACT",
-        "title": "Spatial Systems",
-        "detail": "XR · robotics · real-time human interfaces",
+        "step": "Touch",
+        "title": "Spatial UX",
+        "detail": "AR · holography · retail interfaces",
     },
 ]
 
 CASE_STUDIES: list[dict[str, object]] = [
     {
-        "slug": "autoops",
-        "index": "01",
-        "name": "AutoOps AI",
-        "category": "AUTONOMOUS OBSERVABILITY",
-        "url": "https://github.com/kenzzhood/AutoOps",
-        "summary": (
-            "An autonomous observability engineer that instruments codebases, "
-            "builds telemetry, and investigates incidents with AI-driven RCA."
-        ),
-        "pipeline": ["repo scan", "OTel + Splunk", "AI investigation", "remediation"],
-        "stack": ["Python", "FastAPI", "OpenTelemetry", "Docker", "LLMs"],
-        "signal": "Architecture-aware automation from setup to root cause",
-    },
-    {
         "slug": "aurafit",
-        "index": "02",
+        "index": "01",
         "name": "AuraFit",
-        "category": "AI-NATIVE PRODUCT",
+        "category": "AI fashion studio",
         "url": "https://github.com/kenzzhood/AuraFit",
         "summary": (
-            "A full-stack fashion intelligence platform that transforms a photo "
-            "and personal taste into editorial, shoppable looks."
+            "Full-stack fashion platform that turns one photo and style prefs "
+            "into six editorial looks with real shoppable links."
         ),
-        "pipeline": ["vision input", "preference model", "look generation", "discovery"],
-        "stack": ["Next.js", "React Native", "Azure OpenAI", "Supabase"],
-        "signal": "Web, mobile, multimodal AI, and product discovery in one system",
+        "pipeline": ["photo in", "GPT-4o + vision", "look board", "product crawl"],
+        "stack": ["Next.js", "Expo", "Azure OpenAI", "Prisma", "pgvector", "Playwright"],
+        "signal": "Web studio + mobile app + self-hosted discovery crawler",
     },
     {
-        "slug": "placeit-xr",
-        "index": "03",
-        "name": "PlaceIT XR",
-        "category": "SPATIAL COMMERCE",
-        "url": "https://github.com/kenzzhood/PlaceIT_XR",
+        "slug": "autoops",
+        "index": "02",
+        "name": "AutoOps AI",
+        "category": "Observability CLI · PyPI",
+        "url": "https://github.com/kenzzhood/AutoOps",
         "summary": (
-            "An AI-powered AR shopping assistant that understands a space, "
-            "finds suitable products, and previews them in context."
+            "Autonomous CLI that scans a codebase, instruments it, bootstraps "
+            "Splunk + OpenTelemetry, and runs AI-driven RCA."
         ),
-        "pipeline": ["scene image", "multimodal analysis", "retrieval", "AR placement"],
-        "stack": ["Flutter", "Gemini", "AR", "Computer Vision"],
-        "signal": "Spatial reasoning connected directly to a useful product flow",
+        "pipeline": ["scan", "instrument", "collect evidence", "remediate"],
+        "stack": ["Python", "FastAPI", "Splunk", "OpenTelemetry", "Docker", "LLMs"],
+        "signal": "Published as autoops-ai on PyPI with multi-provider LLM support",
+    },
+    {
+        "slug": "miles",
+        "index": "03",
+        "name": "HoloInteract / MILES",
+        "category": "IEEE · holographic AI",
+        "url": "https://github.com/kenzzhood/MILES",
+        "summary": (
+            "Pepper’s Ghost holography with MediaPipe hand tracking and "
+            "RAG-guided multimodal AI for education and product showcases."
+        ),
+        "pipeline": ["gesture", "3D hologram", "LLM guidance", "interact"],
+        "stack": ["Unity", "MediaPipe", "FastAPI", "LLMs", "Gaussian Splatting"],
+        "signal": "IEEE publication on multimodal 3D + holographic interaction",
     },
 ]
 
-# Opaque artwork remains intentional: it looks composed in both GitHub themes,
-# while paired files provide native contrast for readers whose theme follows OS.
+# Paired theme tokens — restrained, GitHub-native contrast.
 THEMES: dict[str, dict[str, str]] = {
     "dark": {
-        "bg": "#080b10",
-        "surface": "#0d1219",
-        "surface_2": "#111821",
-        "line": "#263140",
-        "line_soft": "#18212c",
-        "text": "#f0f4f8",
-        "muted": "#8c9aaa",
-        "faint": "#596777",
-        "green": "#6ee7a2",
-        "cyan": "#7dd3fc",
-        "violet": "#c4b5fd",
-        "empty": "#141b24",
+        "bg": "#0d1117",
+        "surface": "#151b23",
+        "surface_2": "#1c2330",
+        "line": "#30363d",
+        "line_soft": "#21262d",
+        "text": "#e6edf3",
+        "muted": "#8b949e",
+        "faint": "#6e7681",
+        "green": "#3fb950",
+        "cyan": "#58a6ff",
+        "violet": "#a371f7",
+        "empty": "#161b22",
     },
     "light": {
-        "bg": "#f7f9fb",
-        "surface": "#ffffff",
-        "surface_2": "#eef3f7",
-        "line": "#ccd6e0",
-        "line_soft": "#e2e8ef",
-        "text": "#111820",
-        "muted": "#526170",
-        "faint": "#7d8996",
-        "green": "#18794e",
-        "cyan": "#0369a1",
-        "violet": "#6d5bd0",
-        "empty": "#e7edf2",
+        "bg": "#ffffff",
+        "surface": "#f6f8fa",
+        "surface_2": "#eef2f6",
+        "line": "#d0d7de",
+        "line_soft": "#e6ebf1",
+        "text": "#1f2328",
+        "muted": "#656d76",
+        "faint": "#8c959f",
+        "green": "#1a7f37",
+        "cyan": "#0969da",
+        "violet": "#8250df",
+        "empty": "#ebedf7",
     },
 }
 

@@ -146,7 +146,7 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
         premium_svg_open(
             WIDTH,
             HEIGHT,
-            "GitHub build telemetry",
+            "GitHub contributions",
             (
                 f"{data['total_contributions']} contributions; current streak "
                 f"{current_length} {current_unit}; longest streak "
@@ -159,11 +159,10 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
     parts.extend(premium_frame(WIDTH, HEIGHT, grid=False))
 
     parts.append(
-        '<text x="32" y="35" class="green" font-size="9.5" '
-        'letter-spacing="1.8">BUILD TELEMETRY // PUBLIC GITHUB SIGNAL</text>'
+        '<text x="32" y="35" class="green" font-size="10">Activity</text>'
         '<text x="32" y="68" class="text" font-size="22" font-weight="700">'
-        "Consistency, not decoration.</text>"
-        f'<text x="828" y="35" class="faint" font-size="8.5" text-anchor="end">'
+        "Public contribution graph</text>"
+        f'<text x="828" y="35" class="faint" font-size="10" text-anchor="end">'
         f'{esc(data["range"]["start"])} → {esc(data["range"]["end"])}</text>'
         '<line x1="32" y1="84" x2="828" y2="84" class="line draw" '
         'pathLength="1" stroke-width="1" style="animation-delay:.1s"/>'
@@ -221,10 +220,10 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
 
     parts.extend(
         [
-            _stat_card(32, "CONTRIBUTIONS", f"{total:,}", "rolling 12 months", "green", 0.38),
+            _stat_card(32, "CONTRIBUTIONS", f"{total:,}", "last 12 months", "green", 0.38),
             _stat_card(231, "ACTIVE DAYS", str(active), f"{average} avg / active day", "cyan", 0.46),
-            _stat_card(430, "CURRENT STREAK", f"{current}d", "active build cadence", "violet", 0.54),
-            _stat_card(629, "LONGEST STREAK", f"{longest}d", "sustained execution", "green", 0.62),
+            _stat_card(430, "CURRENT STREAK", f"{current}d", "ongoing", "violet", 0.54),
+            _stat_card(629, "LONGEST STREAK", f"{longest}d", "best stretch", "green", 0.62),
         ]
     )
 

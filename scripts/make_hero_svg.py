@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate the Spatial Command Center hero in dark and light variants."""
+"""Generate the profile hero with ASCII portrait in dark and light variants."""
 
 from __future__ import annotations
 
 import argparse
-import random
 import sys
+import textwrap
 from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
@@ -25,6 +25,7 @@ from config import (
     COMPANY,
     HERO_DARK_SVG,
     HERO_LIGHT_SVG,
+    LOCATION,
     NAME,
     POSITIONING,
     PROFILE_PREPPED,
@@ -35,10 +36,10 @@ from config import (
 logger = setup_logging("make_hero")
 
 WIDTH = CANVAS_WIDTH
-HEIGHT = 420
+HEIGHT = 400
 
 
-def portrait_rows(path: Path, cols: int = 44, rows: int = 31) -> list[str]:
+def portrait_rows(path: Path, cols: int = 44, rows: int = 30) -> list[str]:
     """Convert the preprocessed portrait to a compact ASCII field."""
     if not path.is_file():
         raise FileNotFoundError(
@@ -66,142 +67,105 @@ def portrait_rows(path: Path, cols: int = 44, rows: int = 31) -> list[str]:
     return result
 
 
-def _point_field() -> str:
-    """Deterministic spatial point cloud behind the portrait."""
-    rng = random.Random(19)
-    parts: list[str] = []
-    for index in range(42):
-        x = rng.uniform(575, 826)
-        y = rng.uniform(58, 362)
-        radius = rng.choice((0.8, 1.0, 1.3, 1.6))
-        color_class = rng.choice(("cyan", "green", "faint"))
-        delay = 0.35 + (index % 9) * 0.07
-        parts.append(
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{radius}" '
-            f'class="{color_class} fade" opacity=".65" '
-            f'style="animation-delay:{delay:.2f}s"/>'
-        )
-    return "".join(parts)
-
-
 def render(theme_name: str, portrait: list[str]) -> list[str]:
     """Build one theme variant."""
     theme = get_theme(theme_name)
+    position_lines = textwrap.wrap(POSITIONING, width=48, break_long_words=False)[:2]
+
     parts: list[str] = [
         premium_svg_open(
             WIDTH,
             HEIGHT,
             f"{NAME} — {ROLE} at {COMPANY}",
             (
-                "Founder, engineer, and researcher building spatial intelligence "
-                "with computer vision, XR, real-time 3D, and agentic AI."
+                "Founder of InnoXR Labs building AI-powered retail engagement "
+                "with interactive 3D, computer vision, and edge AI."
             ),
         ),
         premium_css(theme),
     ]
-    parts.extend(premium_frame(WIDTH, HEIGHT, grid=True))
+    parts.extend(premium_frame(WIDTH, HEIGHT, grid=False))
 
-    # Header rail and identity
     parts.append(
         '<g class="fade" style="animation-delay:.05s">'
-        '<circle cx="37" cy="35" r="4" class="green"/>'
-        '<text x="50" y="39" class="muted" font-size="10.5" '
-        'letter-spacing="2.1">INNOXR // SPATIAL INTELLIGENCE LAB</text>'
-        '<text x="527" y="39" class="faint" font-size="9.5" '
-        'text-anchor="end">PROFILE_NODE 01</text>'
+        f'<text x="36" y="38" class="muted" font-size="11">'
+        f"{esc(COMPANY)} · XR / AI</text>"
+        f'<text x="520" y="38" class="faint" font-size="10.5" '
+        f'text-anchor="end">{esc(LOCATION)}</text>'
         "</g>"
     )
 
     parts.append(
         delayed(
-            f'<text x="36" y="91" class="text" font-size="32" '
-            f'font-weight="700" letter-spacing="-.8">{esc(NAME)}</text>'
-            f'<text x="37" y="119" class="cyan" font-size="12.5" '
-            f'font-weight="700" letter-spacing="1.2">{esc(ROLE.upper())} '
-            f'· {esc(COMPANY.upper())}</text>',
-            0.12,
+            f'<text x="36" y="88" class="text" font-size="30" '
+            f'font-weight="700" letter-spacing="-.6">{esc(NAME)}</text>'
+            f'<text x="37" y="116" class="cyan" font-size="13">'
+            f"{esc(ROLE)} · {esc(COMPANY)}</text>",
+            0.1,
         )
     )
 
-    # Deliberately hand-wrapped for stable rendering across SVG engines.
-    position_lines = [
-        "Building spatial intelligence systems where AI can see,",
-        "understand, and interact with the physical world.",
-    ]
     parts.append(
         delayed(
             "".join(
-                f'<text x="37" y="{165 + i * 23}" class="text" font-size="14">'
+                f'<text x="37" y="{154 + i * 22}" class="text" font-size="13.5">'
                 f"{esc(line)}</text>"
                 for i, line in enumerate(position_lines)
             ),
-            0.22,
+            0.18,
         )
     )
 
     parts.append(
-        '<line x1="37" y1="218" x2="527" y2="218" class="line draw" '
-        'pathLength="1" stroke-width="1" style="animation-delay:.28s"/>'
+        '<line x1="37" y1="210" x2="520" y2="210" class="line draw" '
+        'pathLength="1" stroke-width="1" style="animation-delay:.24s"/>'
     )
 
-    y = 252
+    y = 244
     for index, proof in enumerate(PROOF_POINTS):
-        inner = (
-            f'<text x="37" y="{y}" class="faint" font-size="9.5" '
-            f'letter-spacing="1.3">{esc(proof["label"])}</text>'
-            f'<text x="175" y="{y}" class="text" font-size="11.5">'
-            f'{esc(proof["value"])}</text>'
+        parts.append(
+            delayed(
+                f'<text x="37" y="{y}" class="faint" font-size="10">'
+                f'{esc(proof["label"])}</text>'
+                f'<text x="128" y="{y}" class="text" font-size="12">'
+                f'{esc(proof["value"])}</text>',
+                0.3 + index * 0.08,
+            )
         )
-        parts.append(delayed(inner, 0.34 + index * 0.09))
-        y += 34
+        y += 32
 
     parts.append(
         delayed(
-            '<rect x="36" y="365" width="491" height="30" rx="8" '
-            'class="surface2" stroke="var(--line)" stroke-width="1"/>'
-            '<text x="52" y="384" class="green" font-size="9.5" '
-            'letter-spacing="1.3">BUILD SIGNAL</text>'
-            '<text x="158" y="384" class="muted" font-size="10.5">'
-            "research → prototype → product → iterate</text>",
-            0.62,
+            '<text x="37" y="368" class="muted" font-size="11">'
+            "2D product media → interactive 3D retail experiences</text>",
+            0.58,
+            "fade",
         )
     )
 
-    # Portrait stage
+    # Portrait panel — quieter framing than the previous command-center stage.
     parts.append(
-        '<rect x="552" y="20" width="288" height="380" rx="16" '
+        '<rect x="548" y="28" width="284" height="344" rx="14" '
         'class="surface" stroke="var(--line)" stroke-width="1"/>'
-        '<path d="M570 72V42H600 M792 42H822V72 M570 347V378H600 '
-        'M792 378H822V347" fill="none" class="line draw" '
-        'pathLength="1" stroke-width="1.2" style="animation-delay:.2s"/>'
-        '<ellipse cx="696" cy="201" rx="112" ry="151" fill="none" '
-        'class="lineSoft draw" pathLength="1" stroke-width=".8" '
-        'style="animation-delay:.25s"/>'
-        '<ellipse cx="696" cy="201" rx="87" ry="135" fill="none" '
-        'class="lineSoft draw" pathLength="1" stroke-width=".7" '
-        'stroke-dasharray="3 6" style="animation-delay:.35s"/>'
-        + _point_field()
     )
 
-    art_x = 572
-    art_y = 76
-    line_height = 8.8
+    art_x = 566
+    art_y = 58
+    line_height = 9.0
     for index, line in enumerate(portrait):
         parts.append(
             f'<text xml:space="preserve" x="{art_x}" '
             f'y="{art_y + index * line_height:.1f}" class="text fade" '
-            f'font-size="7.2" opacity=".92" textLength="248" '
-            f'lengthAdjust="spacing" style="animation-delay:{0.28 + index * 0.025:.3f}s">'
+            f'font-size="7.4" opacity=".9" textLength="248" '
+            f'lengthAdjust="spacing" style="animation-delay:{0.22 + index * 0.02:.3f}s">'
             f"{esc(line)}</text>"
         )
 
     parts.append(
-        '<g class="fade" style="animation-delay:1.05s">'
-        '<rect x="577" y="351" width="238" height="28" rx="7" '
-        'class="surface2" stroke="var(--line)" stroke-width="1"/>'
-        '<circle cx="593" cy="365" r="3" class="green pulse"/>'
-        '<text x="605" y="369" class="muted" font-size="9.5" '
-        'letter-spacing=".7">SYSTEM ONLINE · BENGALURU, IN</text>'
+        '<g class="fade" style="animation-delay:.95s">'
+        '<circle cx="580" cy="348" r="3" class="green pulse"/>'
+        '<text x="592" y="352" class="muted" font-size="10">'
+        "Building in public</text>"
         "</g>"
     )
 
@@ -215,7 +179,6 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--theme",
         choices=("all", "dark", "light"),
         default="all",
-        help="theme variant to generate",
     )
     parser.add_argument("--portrait", type=Path, default=PROFILE_PREPPED)
     return parser.parse_args(argv)
