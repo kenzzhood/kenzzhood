@@ -45,15 +45,24 @@ QUOTES_JSON: Path = DATA_DIR / "quotes.json"
 
 GITHUB_USERNAME: str = "kenzzhood"
 NAME: str = "Goutham Srinath K."
-ROLE: str = "Founder & CEO"
+ROLE: str = "AI / XR Engineer"
 COMPANY: str = "InnoXR Labs"
 PROMPT_HOST: str = "kenzzhood@github"
 LOCATION: str = "Bengaluru, India"
 
+SLOGANS: list[str] = [
+    "Making Retail Intelligent",
+    "Your Vision, Our Technology",
+]
+
 ABOUT: str = (
-    "Building AI-powered retail engagement and analytics for physical stores "
-    "through interactive 3D experiences and edge AI."
+    "I build production systems across computer vision, spatial computing, "
+    "XR, and multimodal AI—from research prototypes to shipped products."
 )
+
+INCUBATED_AT: str = "IITMIC · NSRCEL · iTNT · Sathyabama"
+
+CERTIFICATION: str = "Unity Certified Associate — Game Developer"
 
 RESEARCH_INTERESTS: list[str] = [
     "Computer Vision",
@@ -104,14 +113,6 @@ PUBLICATION: dict[str, str] = {
     "venue": "IEEE, 2026",
 }
 
-HIGHLIGHTS: list[str] = [
-    "Winner, Umagine TN Grand Challenge",
-    "Strategic pilot partnership with TITAN",
-    "Incubated at IIT Madras iTNT Hub, IITM Incubation Cell, and IIMB NSRCEL",
-    "1st place — Agentica 2025, Hack-A-League 3.0, Hackathon SIST 2024",
-    "2nd place, CIIA-5 Mumbai · Top 20 / 4,000, Beyond Tomorrow",
-]
-
 # ---------------------------------------------------------------------------
 # Visual profile system
 # ---------------------------------------------------------------------------
@@ -119,19 +120,18 @@ HIGHLIGHTS: list[str] = [
 CANVAS_WIDTH: int = 860
 
 POSITIONING: str = (
-    "AI-powered retail engagement and analytics for physical stores—"
-    "built with interactive 3D, computer vision, and edge AI."
+    "Computer vision, XR, and multimodal AI systems—"
+    "designed, built, and shipped end to end."
 )
 
 FOUNDER_THESIS: str = (
-    "Founder of InnoXR Labs. IEEE-published researcher. "
-    "8× national hackathon podium finisher."
+    f"Founder, {COMPANY}. Incubated at {INCUBATED_AT}."
 )
 
 PROOF_POINTS: list[dict[str, str]] = [
-    {"label": "Building", "value": "Atmos OS for offline retail @ InnoXR Labs"},
-    {"label": "Incubated", "value": "IITM iTNT · IITMIC · IIMB NSRCEL"},
-    {"label": "Signal", "value": "TITAN pilot · Umagine TN winner · IEEE"},
+    {"label": "Focus", "value": "Computer Vision · XR · Multimodal AI"},
+    {"label": "Shipped", "value": "AuraFit · AutoOps · MILES · Wander Lens"},
+    {"label": "Certified", "value": CERTIFICATION},
 ]
 
 CAPABILITY_GROUPS: list[dict[str, object]] = [
@@ -183,46 +183,60 @@ RESEARCH_PIPELINE: list[dict[str, str]] = [
 
 CASE_STUDIES: list[dict[str, object]] = [
     {
-        "slug": "aurafit",
+        "slug": "miles",
         "index": "01",
+        "name": "HoloInteract / MILES",
+        "category": "IEEE · holographic AI",
+        "url": "https://github.com/kenzzhood/MILES",
+        "summary": (
+            "Interactive holography with MediaPipe hand tracking and "
+            "RAG-guided multimodal AI for education and product showcases."
+        ),
+        "pipeline": ["gesture", "3D hologram", "LLM guidance", "interact"],
+        "stack": ["Unity", "MediaPipe", "FastAPI", "LLMs", "Gaussian Splatting"],
+        "signal": "IEEE-published multimodal 3D + holographic interaction system",
+    },
+    {
+        "slug": "aurafit",
+        "index": "02",
         "name": "AuraFit",
-        "category": "AI fashion studio",
+        "category": "Full-stack AI product",
         "url": "https://github.com/kenzzhood/AuraFit",
         "summary": (
-            "Full-stack fashion platform that turns one photo and style prefs "
-            "into six editorial looks with real shoppable links."
+            "Fashion intelligence platform that turns one photo and style prefs "
+            "into six editorial looks with real shoppable product links."
         ),
         "pipeline": ["photo in", "GPT-4o + vision", "look board", "product crawl"],
         "stack": ["Next.js", "Expo", "Azure OpenAI", "Prisma", "pgvector", "Playwright"],
-        "signal": "Web studio + mobile app + self-hosted discovery crawler",
+        "signal": "Web studio + React Native app + self-hosted discovery crawler",
     },
     {
         "slug": "autoops",
-        "index": "02",
+        "index": "03",
         "name": "AutoOps AI",
-        "category": "Observability CLI · PyPI",
+        "category": "Open-source CLI · PyPI",
         "url": "https://github.com/kenzzhood/AutoOps",
         "summary": (
-            "Autonomous CLI that scans a codebase, instruments it, bootstraps "
-            "Splunk + OpenTelemetry, and runs AI-driven RCA."
+            "Autonomous observability CLI that scans a codebase, instruments it, "
+            "bootstraps Splunk + OpenTelemetry, and runs AI-driven RCA."
         ),
         "pipeline": ["scan", "instrument", "collect evidence", "remediate"],
         "stack": ["Python", "FastAPI", "Splunk", "OpenTelemetry", "Docker", "LLMs"],
         "signal": "Published as autoops-ai on PyPI with multi-provider LLM support",
     },
     {
-        "slug": "miles",
-        "index": "03",
-        "name": "HoloInteract / MILES",
-        "category": "IEEE · holographic AI",
-        "url": "https://github.com/kenzzhood/MILES",
+        "slug": "wander-lens",
+        "index": "04",
+        "name": "Wander Lens",
+        "category": "AI travel · AR",
+        "url": "https://github.com/kenzzhood/Wander_Lens",
         "summary": (
-            "Pepper’s Ghost holography with MediaPipe hand tracking and "
-            "RAG-guided multimodal AI for education and product showcases."
+            "Social travel companion with RAG itineraries, matchmaking, and "
+            "AR memories plus Gaussian Splatting food previews."
         ),
-        "pipeline": ["gesture", "3D hologram", "LLM guidance", "interact"],
-        "stack": ["Unity", "MediaPipe", "FastAPI", "LLMs", "Gaussian Splatting"],
-        "signal": "IEEE publication on multimodal 3D + holographic interaction",
+        "pipeline": ["plan", "match", "AR explore", "3D preview"],
+        "stack": ["Hugging Face", "Unity", "ARCore", "Firebase", "LLMs"],
+        "signal": "RAG trip planning connected to spatial AR experiences",
     },
 ]
 

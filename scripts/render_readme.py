@@ -12,18 +12,19 @@ from common import setup_logging
 from config import (
     CANVAS_WIDTH,
     CASE_STUDIES,
+    CERTIFICATION,
     COMPANY,
     CONTACT,
     FOUNDER_THESIS,
     FRAMEWORKS,
-    HIGHLIGHTS,
+    INCUBATED_AT,
     LANGUAGES,
     NAME,
     POSITIONING,
     PUBLICATION,
-    RESEARCH_INTERESTS,
     ROLE,
     ROOT,
+    SLOGANS,
 )
 
 logger = setup_logging("render_readme")
@@ -55,27 +56,21 @@ def project_block(project: dict[str, object]) -> str:
 
 
 def render() -> str:
-    """Compose the complete profile README."""
+    """Compose a developer-first profile README."""
     projects = "\n\n<br>\n\n".join(project_block(project) for project in CASE_STUDIES)
-    research = " · ".join(RESEARCH_INTERESTS)
     languages = " · ".join(LANGUAGES)
     frameworks = " · ".join(FRAMEWORKS)
-    highlights = "\n".join(f"- {html.escape(item)}" for item in HIGHLIGHTS)
+    slogans = " · ".join(SLOGANS)
 
     hero = picture(
         "./assets/hero-dark.svg",
         "./assets/hero-light.svg",
-        f"{NAME}, {ROLE} at {COMPANY}",
+        f"{NAME}, {ROLE}",
     )
     capabilities = picture(
         "./assets/capabilities-dark.svg",
         "./assets/capabilities-light.svg",
-        "Focus areas across vision, XR, and AI products",
-    )
-    research_art = picture(
-        "./assets/research-dark.svg",
-        "./assets/research-light.svg",
-        "Research path from computer vision to spatial UX",
+        "Engineering focus across vision, XR, and AI products",
     )
     telemetry = picture(
         "./assets/contribution-dark.svg",
@@ -94,6 +89,8 @@ def render() -> str:
 
 <br>
 
+**{html.escape(slogans)}**
+
 {html.escape(POSITIONING)}
 
 <sub>{html.escape(FOUNDER_THESIS)}</sub>
@@ -110,32 +107,24 @@ def render() -> str:
 
 <br>
 
-## Selected work
+## Projects
+
+Systems I've designed, built, and shipped.
 
 {projects}
-
-<br>
-
-## Focus
-
-{capabilities}
-
-<br>
-
-## Research path
-
-{research_art}
-
-<div align="center">
-<sub>{html.escape(research)}</sub>
-</div>
 
 <br>
 
 ## Publication
 
 **[{html.escape(PUBLICATION["title"])}]({PUBLICATION["url"]})**<br>
-{html.escape(PUBLICATION["venue"])}
+{html.escape(PUBLICATION["venue"])} · [code](https://github.com/kenzzhood/MILES)
+
+<br>
+
+## Skills
+
+{capabilities}
 
 <br>
 
@@ -145,24 +134,26 @@ def render() -> str:
 
 <br>
 
-## Highlights
-
-{highlights}
-
-<br>
-
 ## Stack
 
 **Languages** — {html.escape(languages)}
 
 **Frameworks & tools** — {html.escape(frameworks)}
 
+**Certification** — {html.escape(CERTIFICATION)}
+
 <br>
 
 <div align="center">
 
 <sub>
-<a href="{CONTACT["company"]}">{html.escape(COMPANY)}</a> ·
+Founder, <a href="{CONTACT["company"]}">{html.escape(COMPANY)}</a> ·
+Incubated at {html.escape(INCUBATED_AT)}
+</sub>
+
+<br>
+
+<sub>
 <a href="mailto:{CONTACT["email"]}">{html.escape(CONTACT["email"])}</a>
 </sub>
 

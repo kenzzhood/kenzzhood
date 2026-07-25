@@ -60,9 +60,9 @@ def render_capabilities(theme_name: str) -> list[str]:
     parts.extend(premium_frame(WIDTH, height))
     parts.append(
         _section_header(
-            "Focus",
-            "Where the work sits.",
-            "Vision, spatial interfaces, and AI systems shipping as products.",
+            "Skills",
+            "What I build with.",
+            "Vision, spatial interfaces, and AI systems shipped as real products.",
         )
     )
 

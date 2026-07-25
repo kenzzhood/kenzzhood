@@ -8,14 +8,16 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/hero-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/hero-light.svg">
-  <img src="./assets/hero-dark.svg" width="860" alt="Goutham Srinath K., Founder &amp; CEO at InnoXR Labs">
+  <img src="./assets/hero-dark.svg" width="860" alt="Goutham Srinath K., AI / XR Engineer">
 </picture>
 
 <br>
 
-AI-powered retail engagement and analytics for physical stores—built with interactive 3D, computer vision, and edge AI.
+**Making Retail Intelligent · Your Vision, Our Technology**
 
-<sub>Founder of InnoXR Labs. IEEE-published researcher. 8× national hackathon podium finisher.</sub>
+Computer vision, XR, and multimodal AI systems—designed, built, and shipped end to end.
+
+<sub>Founder, InnoXR Labs. Incubated at IITMIC · NSRCEL · iTNT · Sathyabama.</sub>
 
 <br><br>
 
@@ -29,7 +31,19 @@ AI-powered retail engagement and analytics for physical stores—built with inte
 
 <br>
 
-## Selected work
+## Projects
+
+Systems I've designed, built, and shipped.
+
+<a href="https://github.com/kenzzhood/MILES">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/miles-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/projects/miles-light.svg">
+  <img src="./assets/projects/miles-dark.svg" width="860" alt="HoloInteract / MILES — project overview">
+</picture>
+</a>
+
+<br>
 
 <a href="https://github.com/kenzzhood/AuraFit">
 <picture>
@@ -51,44 +65,30 @@ AI-powered retail engagement and analytics for physical stores—built with inte
 
 <br>
 
-<a href="https://github.com/kenzzhood/MILES">
+<a href="https://github.com/kenzzhood/Wander_Lens">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/miles-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/projects/miles-light.svg">
-  <img src="./assets/projects/miles-dark.svg" width="860" alt="HoloInteract / MILES — project overview">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/wander-lens-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/projects/wander-lens-light.svg">
+  <img src="./assets/projects/wander-lens-dark.svg" width="860" alt="Wander Lens — project overview">
 </picture>
 </a>
-
-<br>
-
-## Focus
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/capabilities-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/capabilities-light.svg">
-  <img src="./assets/capabilities-dark.svg" width="860" alt="Focus areas across vision, XR, and AI products">
-</picture>
-
-<br>
-
-## Research path
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/research-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/research-light.svg">
-  <img src="./assets/research-dark.svg" width="860" alt="Research path from computer vision to spatial UX">
-</picture>
-
-<div align="center">
-<sub>Computer Vision · Gaussian Splatting · 3D Reconstruction · Spatial Computing · Holography · LLMs · AR / VR / MR</sub>
-</div>
 
 <br>
 
 ## Publication
 
 **[MILES: Multimodal Intelligent Assistant for 3D Model Generation and Holographic Interaction Using Voice and Gesture Control](https://doi.org/10.1109/RMKMATE69073.2026.11518707)**<br>
-IEEE, 2026
+IEEE, 2026 · [code](https://github.com/kenzzhood/MILES)
+
+<br>
+
+## Skills
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/capabilities-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/capabilities-light.svg">
+  <img src="./assets/capabilities-dark.svg" width="860" alt="Engineering focus across vision, XR, and AI products">
+</picture>
 
 <br>
 
@@ -102,28 +102,26 @@ IEEE, 2026
 
 <br>
 
-## Highlights
-
-- Winner, Umagine TN Grand Challenge
-- Strategic pilot partnership with TITAN
-- Incubated at IIT Madras iTNT Hub, IITM Incubation Cell, and IIMB NSRCEL
-- 1st place — Agentica 2025, Hack-A-League 3.0, Hackathon SIST 2024
-- 2nd place, CIIA-5 Mumbai · Top 20 / 4,000, Beyond Tomorrow
-
-<br>
-
 ## Stack
 
 **Languages** — Python · C++ · C# · TypeScript · JavaScript · Dart · Java
 
 **Frameworks & tools** — Unity · Next.js · React · FastAPI · Flutter · Azure OpenAI · LangChain · Hugging Face · Docker
 
+**Certification** — Unity Certified Associate — Game Developer
+
 <br>
 
 <div align="center">
 
 <sub>
-<a href="https://innoxrlabs.com">InnoXR Labs</a> ·
+Founder, <a href="https://innoxrlabs.com">InnoXR Labs</a> ·
+Incubated at IITMIC · NSRCEL · iTNT · Sathyabama
+</sub>
+
+<br>
+
+<sub>
 <a href="mailto:gtkgoutham@gmail.com">gtkgoutham@gmail.com</a>
 </sub>
 

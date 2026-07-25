@@ -22,15 +22,18 @@ from common import (
 )
 from config import (
     CANVAS_WIDTH,
+    CERTIFICATION,
     COMPANY,
     HERO_DARK_SVG,
     HERO_LIGHT_SVG,
+    INCUBATED_AT,
     LOCATION,
     NAME,
     POSITIONING,
     PROFILE_PREPPED,
     PROOF_POINTS,
     ROLE,
+    SLOGANS,
 )
 
 logger = setup_logging("make_hero")
@@ -69,27 +72,28 @@ def portrait_rows(path: Path, cols: int = 44, rows: int = 30) -> list[str]:
 
 def render(theme_name: str, portrait: list[str]) -> list[str]:
     """Build one theme variant."""
-    theme = get_theme(theme_name)
+    get_theme(theme_name)
     position_lines = textwrap.wrap(POSITIONING, width=48, break_long_words=False)[:2]
+    slogan = f"{SLOGANS[0]}  ·  {SLOGANS[1]}"
 
     parts: list[str] = [
         premium_svg_open(
             WIDTH,
             HEIGHT,
-            f"{NAME} — {ROLE} at {COMPANY}",
+            f"{NAME} — {ROLE}",
             (
-                "Founder of InnoXR Labs building AI-powered retail engagement "
-                "with interactive 3D, computer vision, and edge AI."
+                "AI / XR engineer building computer vision, spatial computing, "
+                "and multimodal AI systems. Founder of InnoXR Labs."
             ),
         ),
-        premium_css(theme),
+        premium_css(get_theme(theme_name)),
     ]
     parts.extend(premium_frame(WIDTH, HEIGHT, grid=False))
 
     parts.append(
         '<g class="fade" style="animation-delay:.05s">'
         f'<text x="36" y="38" class="muted" font-size="11">'
-        f"{esc(COMPANY)} · XR / AI</text>"
+        f"{esc(ROLE)}</text>"
         f'<text x="520" y="38" class="faint" font-size="10.5" '
         f'text-anchor="end">{esc(LOCATION)}</text>'
         "</g>"
@@ -97,10 +101,10 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
 
     parts.append(
         delayed(
-            f'<text x="36" y="88" class="text" font-size="30" '
+            f'<text x="36" y="84" class="text" font-size="30" '
             f'font-weight="700" letter-spacing="-.6">{esc(NAME)}</text>'
-            f'<text x="37" y="116" class="cyan" font-size="13">'
-            f"{esc(ROLE)} · {esc(COMPANY)}</text>",
+            f'<text x="37" y="112" class="cyan" font-size="12.5">'
+            f"{esc(slogan)}</text>",
             0.1,
         )
     )
@@ -108,7 +112,7 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
     parts.append(
         delayed(
             "".join(
-                f'<text x="37" y="{154 + i * 22}" class="text" font-size="13.5">'
+                f'<text x="37" y="{148 + i * 22}" class="text" font-size="13.5">'
                 f"{esc(line)}</text>"
                 for i, line in enumerate(position_lines)
             ),
@@ -117,33 +121,34 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
     )
 
     parts.append(
-        '<line x1="37" y1="210" x2="520" y2="210" class="line draw" '
+        '<line x1="37" y1="204" x2="520" y2="204" class="line draw" '
         'pathLength="1" stroke-width="1" style="animation-delay:.24s"/>'
     )
 
-    y = 244
+    y = 236
     for index, proof in enumerate(PROOF_POINTS):
         parts.append(
             delayed(
                 f'<text x="37" y="{y}" class="faint" font-size="10">'
                 f'{esc(proof["label"])}</text>'
-                f'<text x="128" y="{y}" class="text" font-size="12">'
+                f'<text x="122" y="{y}" class="text" font-size="12">'
                 f'{esc(proof["value"])}</text>',
                 0.3 + index * 0.08,
             )
         )
-        y += 32
+        y += 30
 
     parts.append(
         delayed(
-            '<text x="37" y="368" class="muted" font-size="11">'
-            "2D product media → interactive 3D retail experiences</text>",
+            f'<text x="37" y="348" class="muted" font-size="11">'
+            f"Founder, {esc(COMPANY)}</text>"
+            f'<text x="37" y="370" class="faint" font-size="10.5">'
+            f"Incubated at {esc(INCUBATED_AT)}</text>",
             0.58,
             "fade",
         )
     )
 
-    # Portrait panel — quieter framing than the previous command-center stage.
     parts.append(
         '<rect x="548" y="28" width="284" height="344" rx="14" '
         'class="surface" stroke="var(--line)" stroke-width="1"/>'
@@ -164,8 +169,8 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
     parts.append(
         '<g class="fade" style="animation-delay:.95s">'
         '<circle cx="580" cy="348" r="3" class="green pulse"/>'
-        '<text x="592" y="352" class="muted" font-size="10">'
-        "Building in public</text>"
+        f'<text x="592" y="352" class="muted" font-size="9.5">'
+        f"{esc(CERTIFICATION.split(' — ')[0])}</text>"
         "</g>"
     )
 
