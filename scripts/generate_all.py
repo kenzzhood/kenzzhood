@@ -4,12 +4,13 @@ One-command generator for all README assets.
 
 Runs (in order):
   1. prep_photo          (optional — skip with --skip-photo)
-  2. make_ascii_svg
-  3. make_neofetch
-  4. make_banner
-  5. fetch_contributions
+  2. make_hero_svg
+  3. make_capabilities_svg
+  4. make_projects_svg
+  5. fetch_contributions (optional — skip with --skip-network)
   6. render_heatmap_svg
-  7. fetch_repos         (optional — skip with --skip-repos)
+  7. render_readme
+  8. validate_profile
 
 Usage
 -----
@@ -50,9 +51,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="skip rembg / CLAHE prep (reuse profile-prepped.png)",
     )
     parser.add_argument(
-        "--skip-repos",
+        "--skip-network",
         action="store_true",
-        help="skip GitHub API repo listing",
+        help="reuse existing contribution JSON instead of fetching GitHub",
     )
     parser.add_argument(
         "--heatmap-only",
@@ -68,6 +69,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.heatmap_only:
             run_script("fetch_contributions.py")
             run_script("render_heatmap_svg.py")
+            run_script("validate_profile.py")
             return 0
 
         if not args.skip_photo:
@@ -76,17 +78,14 @@ def main(argv: list[str] | None = None) -> int:
             logger.error("%s missing — run without --skip-photo", PROFILE_PREPPED)
             return 1
 
-        run_script("make_ascii_svg.py")
-        run_script("make_neofetch.py")
-        run_script("make_banner.py")
-        run_script("fetch_contributions.py")
+        run_script("make_hero_svg.py")
+        run_script("make_capabilities_svg.py")
+        run_script("make_projects_svg.py")
+        if not args.skip_network:
+            run_script("fetch_contributions.py")
         run_script("render_heatmap_svg.py")
-
-        if not args.skip_repos:
-            try:
-                run_script("fetch_repos.py")
-            except RuntimeError as exc:
-                logger.warning("repo fetch skipped: %s", exc)
+        run_script("render_readme.py")
+        run_script("validate_profile.py")
 
         logger.info("all assets generated successfully")
     except RuntimeError as exc:

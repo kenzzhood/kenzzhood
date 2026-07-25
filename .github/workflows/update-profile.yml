@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  heatmap:
+  telemetry:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,13 +29,16 @@ jobs:
       - name: Fetch contributions
         run: python scripts/fetch_contributions.py
 
-      - name: Render heatmap SVG
+      - name: Render telemetry artwork
         run: python scripts/render_heatmap_svg.py
 
-      - name: Commit refreshed graph
+      - name: Validate profile
+        run: python scripts/validate_profile.py
+
+      - name: Commit refreshed telemetry
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: refresh contribution graph [skip ci]"
-          file_pattern: "data/contributions.json assets/contribution-graph.svg"
+          commit_message: "chore: refresh build telemetry [skip ci]"
+          file_pattern: "data/contributions.json assets/contribution-dark.svg assets/contribution-light.svg"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"

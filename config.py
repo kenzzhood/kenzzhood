@@ -23,8 +23,17 @@ PROFILE_PREPPED: Path = ASSETS_DIR / "profile-prepped.png"
 ASCII_SVG: Path = ASSETS_DIR / "ascii-profile.svg"
 NEOFETCH_SVG: Path = ASSETS_DIR / "neofetch.svg"
 CONTRIBUTION_SVG: Path = ASSETS_DIR / "contribution-graph.svg"
+CONTRIBUTION_DARK_SVG: Path = ASSETS_DIR / "contribution-dark.svg"
+CONTRIBUTION_LIGHT_SVG: Path = ASSETS_DIR / "contribution-light.svg"
 BANNER_SVG: Path = ASSETS_DIR / "banner.svg"
 SEPARATOR_SVG: Path = ASSETS_DIR / "separator.svg"
+HERO_DARK_SVG: Path = ASSETS_DIR / "hero-dark.svg"
+HERO_LIGHT_SVG: Path = ASSETS_DIR / "hero-light.svg"
+CAPABILITIES_DARK_SVG: Path = ASSETS_DIR / "capabilities-dark.svg"
+CAPABILITIES_LIGHT_SVG: Path = ASSETS_DIR / "capabilities-light.svg"
+RESEARCH_DARK_SVG: Path = ASSETS_DIR / "research-dark.svg"
+RESEARCH_LIGHT_SVG: Path = ASSETS_DIR / "research-light.svg"
+PROJECTS_DIR: Path = ASSETS_DIR / "projects"
 
 CONTRIBUTIONS_JSON: Path = DATA_DIR / "contributions.json"
 REPOS_JSON: Path = DATA_DIR / "repos.json"
@@ -128,6 +137,153 @@ CONTACT: dict[str, str] = {
     "github": "https://github.com/kenzzhood",
     "company": "https://innoxrlabs.com",
     "email": "hello@innoxrlabs.com",
+}
+
+# ---------------------------------------------------------------------------
+# Spatial Command Center — profile narrative and proof
+# ---------------------------------------------------------------------------
+
+CANVAS_WIDTH: int = 860
+
+POSITIONING: str = (
+    "Building spatial intelligence systems where AI can see, understand, "
+    "and interact with the physical world."
+)
+
+FOUNDER_THESIS: str = (
+    "I work across computer vision, real-time 3D, XR, and agentic AI—"
+    "turning research-heavy ideas into products people can actually use."
+)
+
+PROOF_POINTS: list[dict[str, str]] = [
+    {"label": "OPERATING MODE", "value": "Founder × Engineer × Researcher"},
+    {"label": "BUILDING", "value": "Spatial intelligence @ InnoXR Labs"},
+    {"label": "SYSTEMS", "value": "Vision · XR · AI agents · Real-time 3D"},
+]
+
+CAPABILITY_GROUPS: list[dict[str, object]] = [
+    {
+        "index": "01",
+        "name": "COMPUTER VISION",
+        "statement": "Perception systems that turn pixels into spatial understanding.",
+        "pipeline": ["capture", "infer", "reconstruct"],
+        "tools": ["OpenCV", "PyTorch", "TensorFlow", "3D vision"],
+    },
+    {
+        "index": "02",
+        "name": "SPATIAL / XR",
+        "statement": "Interfaces that connect digital intelligence to physical space.",
+        "pipeline": ["map", "interact", "simulate"],
+        "tools": ["Unity", "OpenXR", "React Native", "ROS"],
+    },
+    {
+        "index": "03",
+        "name": "AI SYSTEMS",
+        "statement": "Agentic products that observe, reason, and take useful action.",
+        "pipeline": ["retrieve", "reason", "act"],
+        "tools": ["FastAPI", "LLMs", "RAG", "Docker"],
+    },
+]
+
+RESEARCH_PIPELINE: list[dict[str, str]] = [
+    {
+        "step": "OBSERVE",
+        "title": "Computer Vision",
+        "detail": "Detection · tracking · multimodal perception",
+    },
+    {
+        "step": "RECONSTRUCT",
+        "title": "3D Intelligence",
+        "detail": "Gaussian splats · geometry · scene recovery",
+    },
+    {
+        "step": "UNDERSTAND",
+        "title": "Agentic AI",
+        "detail": "LLMs · memory · tool use · planning",
+    },
+    {
+        "step": "INTERACT",
+        "title": "Spatial Systems",
+        "detail": "XR · robotics · real-time human interfaces",
+    },
+]
+
+CASE_STUDIES: list[dict[str, object]] = [
+    {
+        "slug": "autoops",
+        "index": "01",
+        "name": "AutoOps AI",
+        "category": "AUTONOMOUS OBSERVABILITY",
+        "url": "https://github.com/kenzzhood/AutoOps",
+        "summary": (
+            "An autonomous observability engineer that instruments codebases, "
+            "builds telemetry, and investigates incidents with AI-driven RCA."
+        ),
+        "pipeline": ["repo scan", "OTel + Splunk", "AI investigation", "remediation"],
+        "stack": ["Python", "FastAPI", "OpenTelemetry", "Docker", "LLMs"],
+        "signal": "Architecture-aware automation from setup to root cause",
+    },
+    {
+        "slug": "aurafit",
+        "index": "02",
+        "name": "AuraFit",
+        "category": "AI-NATIVE PRODUCT",
+        "url": "https://github.com/kenzzhood/AuraFit",
+        "summary": (
+            "A full-stack fashion intelligence platform that transforms a photo "
+            "and personal taste into editorial, shoppable looks."
+        ),
+        "pipeline": ["vision input", "preference model", "look generation", "discovery"],
+        "stack": ["Next.js", "React Native", "Azure OpenAI", "Supabase"],
+        "signal": "Web, mobile, multimodal AI, and product discovery in one system",
+    },
+    {
+        "slug": "placeit-xr",
+        "index": "03",
+        "name": "PlaceIT XR",
+        "category": "SPATIAL COMMERCE",
+        "url": "https://github.com/kenzzhood/PlaceIT_XR",
+        "summary": (
+            "An AI-powered AR shopping assistant that understands a space, "
+            "finds suitable products, and previews them in context."
+        ),
+        "pipeline": ["scene image", "multimodal analysis", "retrieval", "AR placement"],
+        "stack": ["Flutter", "Gemini", "AR", "Computer Vision"],
+        "signal": "Spatial reasoning connected directly to a useful product flow",
+    },
+]
+
+# Opaque artwork remains intentional: it looks composed in both GitHub themes,
+# while paired files provide native contrast for readers whose theme follows OS.
+THEMES: dict[str, dict[str, str]] = {
+    "dark": {
+        "bg": "#080b10",
+        "surface": "#0d1219",
+        "surface_2": "#111821",
+        "line": "#263140",
+        "line_soft": "#18212c",
+        "text": "#f0f4f8",
+        "muted": "#8c9aaa",
+        "faint": "#596777",
+        "green": "#6ee7a2",
+        "cyan": "#7dd3fc",
+        "violet": "#c4b5fd",
+        "empty": "#141b24",
+    },
+    "light": {
+        "bg": "#f7f9fb",
+        "surface": "#ffffff",
+        "surface_2": "#eef3f7",
+        "line": "#ccd6e0",
+        "line_soft": "#e2e8ef",
+        "text": "#111820",
+        "muted": "#526170",
+        "faint": "#7d8996",
+        "green": "#18794e",
+        "cyan": "#0369a1",
+        "violet": "#6d5bd0",
+        "empty": "#e7edf2",
+    },
 }
 
 # ---------------------------------------------------------------------------

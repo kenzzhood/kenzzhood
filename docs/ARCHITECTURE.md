@@ -1,45 +1,49 @@
 # Architecture
 
-This repository is a **GitHub profile README** generator. Animations live entirely
-inside self-contained SVG files; the `README.md` only embeds them via `<img>`.
+This repository generates a proof-driven GitHub profile from a single content
+and design source: [`config.py`](../config.py).
 
-GitHub strips `<script>` and most inline CSS from markdown, but SVGs loaded as
-images still run **SMIL** and **CSS keyframe** animations.
+The README is semantic HTML and Markdown. All visual assets are local,
+self-contained SVG files with accessible titles, descriptions, one-shot CSS
+motion, and reduced-motion fallbacks.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  README.md (terminal layout, HTML tables for columns)       │
-│   ├─ assets/banner.svg                                      │
-│   ├─ assets/contribution-graph.svg  ← daily refresh         │
-│   ├─ assets/ascii-profile.svg       ← regenerate on photo   │
-│   └─ assets/neofetch.svg            ← regenerate on config  │
-└─────────────────────────────────────────────────────────────┘
-              ▲                         ▲
-              │                         │
-     scripts/*.py (local)     .github/workflows/update-profile.yml
-              │                         │
-              └──────── config.py ──────┘
+```text
+config.py
+   ├── make_hero_svg.py ─────────── hero-dark/light.svg
+   ├── make_capabilities_svg.py ─── capabilities + research SVGs
+   ├── make_projects_svg.py ─────── linked case-study SVGs
+   ├── render_readme.py ─────────── README.md
+   └── fetch_contributions.py
+          └── render_heatmap_svg.py ── contribution-dark/light.svg
 ```
 
-## Pipelines
+`generate_all.py` orchestrates the complete local build.
+`validate_profile.py` checks XML validity, accessibility metadata, local asset
+references, forbidden script/external visual dependencies, and contribution
+data sanity.
 
-| Asset | Scripts | When |
-|-------|---------|------|
-| ASCII portrait | `prep_photo.py` → `make_ascii_svg.py` | Photo changes |
-| Neofetch card | `make_neofetch.py` | Profile/config changes |
-| Banner / separator | `make_banner.py` | Rarely |
-| Contribution graph | `fetch_contributions.py` → `render_heatmap_svg.py` | Daily (CI) |
-| Latest repos | `fetch_repos.py` | Optional |
+## Content model
+
+- **Positioning:** founder thesis and proof points
+- **Capabilities:** computer vision, spatial/XR, and AI systems
+- **Research:** observe → reconstruct → understand → interact
+- **Case studies:** problem framing, architecture pipeline, stack, and signal
+- **Telemetry:** contribution activity scraped from the public GitHub page
+
+Each major visual has a dark and light variant. The README selects the
+appropriate file with `<picture>` and `prefers-color-scheme`.
+
+## Update paths
+
+- A portrait change runs `prep_photo.py`, then regenerates the hero.
+- A narrative, project, or design change updates `config.py`, then runs the
+  complete generator.
+- GitHub Actions refreshes contribution JSON and both telemetry assets daily.
 
 ## Constraints
 
-- **No JavaScript** in the README
-- **No GitHub token** / GraphQL for contributions
-- **No third-party stats services**
-- Only external request: scrape GitHub's public contributions HTML
-- Everything generated locally (or in Actions) and committed
-
-## Config
-
-All identity, colours, fonts, animation timings, and SVG sizes live in
-[`config.py`](../config.py).
+- No JavaScript in the README or SVGs
+- No GitHub token or GraphQL dependency for contributions
+- No hosted profile-stat widgets or external image dependencies
+- The only dynamic external request scrapes GitHub's public contribution page
+- Generated README and SVG assets remain committed for reliable rendering
