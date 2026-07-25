@@ -8,12 +8,15 @@ import sys
 import textwrap
 
 from common import (
+    PAD,
+    chip,
     delayed,
     esc,
     get_theme,
     premium_css,
     premium_frame,
     premium_svg_open,
+    section_header,
     setup_logging,
     truncate,
     write_svg,
@@ -33,21 +36,19 @@ logger = setup_logging("make_capabilities")
 WIDTH = CANVAS_WIDTH
 
 
-def _section_header(kicker: str, title: str, subtitle: str) -> str:
-    return (
-        f'<text x="32" y="36" class="green" font-size="10">'
-        f"{esc(kicker)}</text>"
-        f'<text x="32" y="68" class="text" font-size="22" '
-        f'font-weight="700">{esc(title)}</text>'
-        f'<text x="32" y="92" class="muted" font-size="12">{esc(subtitle)}</text>'
-        '<line x1="32" y1="112" x2="828" y2="112" class="line draw" '
-        'pathLength="1" stroke-width="1" style="animation-delay:.1s"/>'
-    )
-
-
 def render_capabilities(theme_name: str) -> list[str]:
     """Render the three-domain capability matrix."""
-    height = 400
+    header, divider_y = section_header(
+        WIDTH,
+        "What I build with",
+        "Vision, spatial interfaces, and AI systems shipped as real products.",
+    )
+    card_y = divider_y + 28
+    card_w = 252
+    card_h = 232
+    gap = 20
+    height = card_y + card_h + PAD
+
     parts: list[str] = [
         premium_svg_open(
             WIDTH,
@@ -58,20 +59,9 @@ def render_capabilities(theme_name: str) -> list[str]:
         premium_css(get_theme(theme_name)),
     ]
     parts.extend(premium_frame(WIDTH, height))
-    parts.append(
-        _section_header(
-            "Skills",
-            "What I build with.",
-            "Vision, spatial interfaces, and AI systems shipped as real products.",
-        )
-    )
-
-    card_y = 136
-    card_w = 252
-    card_h = 232
-    gap = 20
+    parts.append(header)
     for index, group in enumerate(CAPABILITY_GROUPS):
-        x = 32 + index * (card_w + gap)
+        x = PAD + index * (card_w + gap)
         accent_class = ("green", "cyan", "violet")[index]
         tools = group["tools"]
         pipeline = group["pipeline"]
@@ -111,18 +101,20 @@ def render_capabilities(theme_name: str) -> list[str]:
                 )
 
         card.append(
-            f'<text x="{x + 18}" y="{card_y + 170}" class="faint" '
+            f'<text x="{x + 18}" y="{card_y + 172}" class="faint" '
             'font-size="9">Stack</text>'
         )
-        for tool_index, tool in enumerate(tools):
-            col = tool_index % 2
-            row = tool_index // 2
-            tool_x = x + 18 + col * 110
-            tool_y = card_y + 194 + row * 22
-            card.append(
-                f'<text x="{tool_x}" y="{tool_y}" class="muted" '
-                f'font-size="10.5">{esc(tool)}</text>'
-            )
+        chip_x = x + 18.0
+        chip_y = card_y + 182.0
+        row_start_x = chip_x
+        for tool in tools:
+            markup, chip_w = chip(chip_x, chip_y, tool, height=21)
+            if chip_x + chip_w > x + card_w - 14:
+                chip_x = row_start_x
+                chip_y += 27
+                markup, chip_w = chip(chip_x, chip_y, tool, height=21)
+            card.append(markup)
+            chip_x += chip_w + 7
 
         parts.append(delayed("".join(card), 0.16 + index * 0.1))
 
@@ -132,7 +124,17 @@ def render_capabilities(theme_name: str) -> list[str]:
 
 def render_research(theme_name: str) -> list[str]:
     """Render the research-to-product pipeline."""
-    height = 250
+    header, divider_y = section_header(
+        WIDTH,
+        "From pixels to presence",
+        "The same loop shows up in retail XR, holography, and product AI.",
+        accent="cyan",
+    )
+    node_y = divider_y + 28
+    node_w = 184
+    gap = 20
+    height = node_y + 86 + PAD
+
     parts: list[str] = [
         premium_svg_open(
             WIDTH,
@@ -143,18 +145,9 @@ def render_research(theme_name: str) -> list[str]:
         premium_css(get_theme(theme_name)),
     ]
     parts.extend(premium_frame(WIDTH, height))
-    parts.append(
-        _section_header(
-            "Research",
-            "From pixels to presence.",
-            "The same loop shows up in retail XR, holography, and product AI.",
-        )
-    )
+    parts.append(header)
 
-    start_x = 32
-    node_y = 132
-    node_w = 184
-    gap = 20
+    start_x = PAD
     for index, item in enumerate(RESEARCH_PIPELINE):
         x = start_x + index * (node_w + gap)
         accent_class = ("green", "cyan", "violet", "green")[index]

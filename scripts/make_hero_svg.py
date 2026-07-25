@@ -70,10 +70,16 @@ def portrait_rows(path: Path, cols: int = 44, rows: int = 30) -> list[str]:
     return result
 
 
+PAD = 32
+PANEL_X = 548
+PANEL_GUTTER = 24
+TEXT_RIGHT = PANEL_X - PANEL_GUTTER
+
+
 def render(theme_name: str, portrait: list[str]) -> list[str]:
     """Build one theme variant."""
     get_theme(theme_name)
-    position_lines = textwrap.wrap(POSITIONING, width=48, break_long_words=False)[:2]
+    position_lines = textwrap.wrap(POSITIONING, width=50, break_long_words=False)[:2]
     slogan = f"{SLOGANS[0]}  ·  {SLOGANS[1]}"
 
     parts: list[str] = [
@@ -92,18 +98,18 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
 
     parts.append(
         '<g class="fade" style="animation-delay:.05s">'
-        f'<text x="36" y="38" class="muted" font-size="11">'
-        f"{esc(ROLE)}</text>"
-        f'<text x="520" y="38" class="faint" font-size="10.5" '
+        f'<text x="{PAD}" y="38" class="green" font-size="10" letter-spacing="1.2">'
+        f"{esc(ROLE.upper())}</text>"
+        f'<text x="{TEXT_RIGHT}" y="38" class="faint" font-size="10.5" '
         f'text-anchor="end">{esc(LOCATION)}</text>'
         "</g>"
     )
 
     parts.append(
         delayed(
-            f'<text x="36" y="84" class="text" font-size="30" '
+            f'<text x="{PAD}" y="82" class="text" font-size="29" '
             f'font-weight="700" letter-spacing="-.6">{esc(NAME)}</text>'
-            f'<text x="37" y="112" class="cyan" font-size="12.5">'
+            f'<text x="{PAD}" y="110" class="cyan" font-size="12.5">'
             f"{esc(slogan)}</text>",
             0.1,
         )
@@ -112,7 +118,7 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
     parts.append(
         delayed(
             "".join(
-                f'<text x="37" y="{148 + i * 22}" class="text" font-size="13.5">'
+                f'<text x="{PAD}" y="{146 + i * 22}" class="text" font-size="13.5">'
                 f"{esc(line)}</text>"
                 for i, line in enumerate(position_lines)
             ),
@@ -121,7 +127,7 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
     )
 
     parts.append(
-        '<line x1="37" y1="204" x2="520" y2="204" class="line draw" '
+        f'<line x1="{PAD}" y1="204" x2="{TEXT_RIGHT}" y2="204" class="line draw" '
         'pathLength="1" stroke-width="1" style="animation-delay:.24s"/>'
     )
 
@@ -129,47 +135,58 @@ def render(theme_name: str, portrait: list[str]) -> list[str]:
     for index, proof in enumerate(PROOF_POINTS):
         parts.append(
             delayed(
-                f'<text x="37" y="{y}" class="faint" font-size="10">'
+                f'<text x="{PAD}" y="{y}" class="faint" font-size="10">'
                 f'{esc(proof["label"])}</text>'
-                f'<text x="122" y="{y}" class="text" font-size="12">'
+                f'<text x="115" y="{y}" class="text" font-size="12">'
                 f'{esc(proof["value"])}</text>',
                 0.3 + index * 0.08,
             )
         )
-        y += 30
+        y += 28
+
+    parts.append(
+        f'<line x1="{PAD}" y1="{y + 6}" x2="{TEXT_RIGHT}" y2="{y + 6}" '
+        'class="lineSoft" stroke-width="1"/>'
+    )
 
     parts.append(
         delayed(
-            f'<text x="37" y="348" class="muted" font-size="11">'
+            f'<text x="{PAD}" y="{y + 30}" class="muted" font-size="11">'
             f"Founder, {esc(COMPANY)}</text>"
-            f'<text x="37" y="370" class="faint" font-size="10.5">'
+            f'<text x="{PAD}" y="{y + 50}" class="faint" font-size="10.5">'
             f"Incubated at {esc(INCUBATED_AT)}</text>",
             0.58,
             "fade",
         )
     )
 
+    panel_y = PAD
+    panel_h = HEIGHT - PAD * 2
+    panel_w = WIDTH - PAD - PANEL_X
     parts.append(
-        '<rect x="548" y="28" width="284" height="344" rx="14" '
-        'class="surface" stroke="var(--line)" stroke-width="1"/>'
+        f'<rect x="{PANEL_X}" y="{panel_y}" width="{panel_w}" height="{panel_h}" '
+        'rx="12" class="surface" stroke="var(--line)" stroke-width="1"/>'
     )
 
-    art_x = 566
-    art_y = 58
+    art_x = PANEL_X + 18
+    art_y = panel_y + 26
     line_height = 9.0
     for index, line in enumerate(portrait):
         parts.append(
             f'<text xml:space="preserve" x="{art_x}" '
             f'y="{art_y + index * line_height:.1f}" class="text fade" '
-            f'font-size="7.4" opacity=".9" textLength="248" '
+            f'font-size="7.4" opacity=".9" textLength="{panel_w - 36}" '
             f'lengthAdjust="spacing" style="animation-delay:{0.22 + index * 0.02:.3f}s">'
             f"{esc(line)}</text>"
         )
 
+    cert_y = panel_y + panel_h - 20
     parts.append(
-        '<g class="fade" style="animation-delay:.95s">'
-        '<circle cx="580" cy="348" r="3" class="green pulse"/>'
-        f'<text x="592" y="352" class="muted" font-size="9.5">'
+        f'<line x1="{art_x}" y1="{cert_y - 16}" x2="{PANEL_X + panel_w - 18}" '
+        f'y2="{cert_y - 16}" class="lineSoft" stroke-width="1"/>'
+        f'<g class="fade" style="animation-delay:.95s">'
+        f'<circle cx="{art_x + 3}" cy="{cert_y}" r="3" class="green pulse"/>'
+        f'<text x="{art_x + 13}" y="{cert_y + 4}" class="muted" font-size="9.5">'
         f"{esc(CERTIFICATION.split(' — ')[0])}</text>"
         "</g>"
     )

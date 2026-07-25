@@ -155,11 +155,15 @@ def premium_css(theme: Mapping[str, str]) -> str:
     )
 
 
+PAD: int = 32
+RADIUS: int = 12
+
+
 def premium_frame(
     width: int,
     height: int,
     *,
-    radius: int = 16,
+    radius: int = RADIUS,
     grid: bool = False,
 ) -> list[str]:
     """Return a quiet panel background with a single hairline border."""
@@ -176,6 +180,58 @@ def premium_frame(
                 'class="lineSoft" stroke-width=".7" opacity=".22"/>'
             )
     return parts
+
+
+def section_header(
+    width: int,
+    title: str,
+    subtitle: str = "",
+    *,
+    accent: str = "green",
+    corner: str = "",
+) -> tuple[str, int]:
+    """Return one shared header block (accent mark/title/subtitle/divider) + divider y.
+
+    Every full-width section uses this exact block so the vertical rhythm
+    (title size, divider offset, left margin) is identical everywhere. The
+    markdown heading above the image already names the section, so this
+    header carries a *distinct* descriptive line rather than repeating it.
+    """
+    title_y = 33
+    parts = [
+        f'<rect x="{PAD}" y="{title_y - 12}" width="4" height="15" rx="2" '
+        f'class="{accent}"/>',
+        f'<text x="{PAD + 13}" y="{title_y}" class="text" font-size="18" '
+        f'font-weight="700">{esc(title)}</text>',
+    ]
+    if corner:
+        parts.append(
+            f'<text x="{width - PAD}" y="{title_y}" class="faint" font-size="10" '
+            f'text-anchor="end">{esc(corner)}</text>'
+        )
+    divider_y = 54
+    if subtitle:
+        parts.append(
+            f'<text x="{PAD}" y="58" class="muted" font-size="11.5">{esc(subtitle)}</text>'
+        )
+        divider_y = 78
+    parts.append(
+        f'<line x1="{PAD}" y1="{divider_y}" x2="{width - PAD}" y2="{divider_y}" '
+        'class="line draw" pathLength="1" stroke-width="1" style="animation-delay:.1s"/>'
+    )
+    return "".join(parts), divider_y
+
+
+def chip(x: float, y: float, label: str, *, height: float = 22) -> tuple[str, float]:
+    """Render one pill-shaped tag; returns (markup, width) for manual layout."""
+    width = max(46.0, len(str(label)) * 6.1 + 18)
+    markup = (
+        f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="{height:.1f}" '
+        f'rx="{height / 2:.1f}" class="surface2" stroke="var(--line)" stroke-width=".8"/>'
+        f'<text x="{x + width / 2:.1f}" y="{y + height / 2 + 3.5:.1f}" '
+        f'class="muted" font-size="9.5" text-anchor="middle">{esc(label)}</text>'
+    )
+    return markup, width
 
 
 def delayed(inner: str, delay: float, css_class: str = "rise") -> str:

@@ -35,43 +35,37 @@ Computer vision, XR, and multimodal AI systems—designed, built, and shipped en
 
 Systems I've designed, built, and shipped.
 
-<a href="https://github.com/kenzzhood/MILES">
-<picture>
+<div align="center">
+
+<a href="https://github.com/kenzzhood/MILES"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/miles-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/miles-light.svg">
-  <img src="./assets/projects/miles-dark.svg" width="860" alt="HoloInteract / MILES — project overview">
-</picture>
-</a>
-
-<br>
-
-<a href="https://github.com/kenzzhood/AuraFit">
-<picture>
+  <img src="./assets/projects/miles-dark.svg" width="406" alt="HoloInteract / MILES — project overview">
+</picture></a>
+<a href="https://github.com/kenzzhood/AuraFit"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/aurafit-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/aurafit-light.svg">
-  <img src="./assets/projects/aurafit-dark.svg" width="860" alt="AuraFit — project overview">
-</picture>
-</a>
+  <img src="./assets/projects/aurafit-dark.svg" width="406" alt="AuraFit — project overview">
+</picture></a>
+
+</div>
 
 <br>
 
-<a href="https://github.com/kenzzhood/AutoOps">
-<picture>
+<div align="center">
+
+<a href="https://github.com/kenzzhood/AutoOps"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/autoops-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/autoops-light.svg">
-  <img src="./assets/projects/autoops-dark.svg" width="860" alt="AutoOps AI — project overview">
-</picture>
-</a>
-
-<br>
-
-<a href="https://github.com/kenzzhood/Wander_Lens">
-<picture>
+  <img src="./assets/projects/autoops-dark.svg" width="406" alt="AutoOps AI — project overview">
+</picture></a>
+<a href="https://github.com/kenzzhood/Wander_Lens"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/wander-lens-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/wander-lens-light.svg">
-  <img src="./assets/projects/wander-lens-dark.svg" width="860" alt="Wander Lens — project overview">
-</picture>
-</a>
+  <img src="./assets/projects/wander-lens-dark.svg" width="406" alt="Wander Lens — project overview">
+</picture></a>
+
+</div>
 
 <br>
 

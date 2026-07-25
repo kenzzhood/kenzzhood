@@ -42,8 +42,11 @@ def picture(dark: str, light: str, alt: str, width: int = CANVAS_WIDTH) -> str:
     )
 
 
-def project_block(project: dict[str, object]) -> str:
-    """Return a linked, themed project card."""
+PROJECT_TILE_WIDTH = 406
+
+
+def project_tile(project: dict[str, object]) -> str:
+    """Return one linked, themed project tile."""
     slug = str(project["slug"])
     name = str(project["name"])
     url = html.escape(str(project["url"]), quote=True)
@@ -51,13 +54,24 @@ def project_block(project: dict[str, object]) -> str:
         f"./assets/projects/{slug}-dark.svg",
         f"./assets/projects/{slug}-light.svg",
         f"{name} — project overview",
+        width=PROJECT_TILE_WIDTH,
     )
-    return f'<a href="{url}">\n{art}\n</a>'
+    return f'<a href="{url}">{art}</a>'
+
+
+def project_grid(projects: list[dict[str, object]]) -> str:
+    """Lay projects out two-up so the grid reads as a portfolio, not a list."""
+    rows = []
+    for start in range(0, len(projects), 2):
+        pair = projects[start : start + 2]
+        tiles = "\n".join(project_tile(project) for project in pair)
+        rows.append(f'<div align="center">\n\n{tiles}\n\n</div>')
+    return "\n\n<br>\n\n".join(rows)
 
 
 def render() -> str:
     """Compose a developer-first profile README."""
-    projects = "\n\n<br>\n\n".join(project_block(project) for project in CASE_STUDIES)
+    projects = project_grid(CASE_STUDIES)
     languages = " · ".join(LANGUAGES)
     frameworks = " · ".join(FRAMEWORKS)
     slogans = " · ".join(SLOGANS)

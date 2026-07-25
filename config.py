@@ -145,7 +145,7 @@ CAPABILITY_GROUPS: list[dict[str, object]] = [
     {
         "index": "02",
         "name": "Spatial / XR",
-        "statement": "Ship AR, VR, and holographic experiences people can actually use.",
+        "statement": "Ship AR, VR, and holographic experiences people actually use.",
         "pipeline": ["sense", "interact", "deploy"],
         "tools": ["Unity", "ARCore", "MediaPipe", "Flutter"],
     },

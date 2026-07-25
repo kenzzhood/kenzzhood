@@ -17,6 +17,7 @@ from common import (
     premium_css,
     premium_frame,
     premium_svg_open,
+    section_header,
     setup_logging,
     write_svg,
 )
@@ -30,12 +31,10 @@ from config import (
 logger = setup_logging("render_heatmap")
 
 WIDTH = CANVAS_WIDTH
-HEIGHT = 318
 CELL = 10
 GAP = 3
 STEP = CELL + GAP
 GRID_LEFT = 55
-GRID_TOP = 104
 
 PALETTES: dict[str, list[str]] = {
     "dark": ["#141b24", "#103a2b", "#155c3e", "#1f8a57", "#48d17a", "#8bf0b3"],
@@ -105,6 +104,7 @@ def _month_labels(grid: list[list[Cell]]) -> list[tuple[int, str]]:
 
 def _stat_card(
     x: int,
+    y: int,
     label: str,
     value: str,
     detail: str,
@@ -112,13 +112,13 @@ def _stat_card(
     delay: float,
 ) -> str:
     return delayed(
-        f'<rect x="{x}" y="229" width="185" height="65" rx="11" '
+        f'<rect x="{x}" y="{y}" width="185" height="65" rx="11" '
         'class="surface" stroke="var(--line)" stroke-width="1"/>'
-        f'<text x="{x + 14}" y="249" class="faint" font-size="8" '
+        f'<text x="{x + 14}" y="{y + 20}" class="faint" font-size="8" '
         f'letter-spacing="1.1">{esc(label)}</text>'
-        f'<text x="{x + 14}" y="273" class="{accent_class}" '
+        f'<text x="{x + 14}" y="{y + 44}" class="{accent_class}" '
         f'font-size="17" font-weight="700">{esc(value)}</text>'
-        f'<text x="{x + 14}" y="286" class="muted" font-size="7.8">'
+        f'<text x="{x + 14}" y="{y + 57}" class="muted" font-size="7.8">'
         f"{esc(detail)}</text>",
         delay,
     )
@@ -142,10 +142,21 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
         "opacity:1!important;transform:none!important}}</style>"
     )
 
+    header, divider_y = section_header(
+        WIDTH,
+        "Public contribution graph",
+        corner=f'{data["range"]["start"]} \u2192 {data["range"]["end"]}',
+    )
+    grid_top = divider_y + 20
+    month_label_y = divider_y + 14
+    legend_y = grid_top + 95
+    stat_y = grid_top + 125
+    height = stat_y + 65 + 32
+
     parts: list[str] = [
         premium_svg_open(
             WIDTH,
-            HEIGHT,
+            height,
             "GitHub contributions",
             (
                 f"{data['total_contributions']} contributions; current streak "
@@ -156,26 +167,17 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
         premium_css(theme),
         cell_css,
     ]
-    parts.extend(premium_frame(WIDTH, HEIGHT, grid=False))
-
-    parts.append(
-        '<text x="32" y="35" class="green" font-size="10">Activity</text>'
-        '<text x="32" y="68" class="text" font-size="22" font-weight="700">'
-        "Public contribution graph</text>"
-        f'<text x="828" y="35" class="faint" font-size="10" text-anchor="end">'
-        f'{esc(data["range"]["start"])} → {esc(data["range"]["end"])}</text>'
-        '<line x1="32" y1="84" x2="828" y2="84" class="line draw" '
-        'pathLength="1" stroke-width="1" style="animation-delay:.1s"/>'
-    )
+    parts.extend(premium_frame(WIDTH, height, grid=False))
+    parts.append(header)
 
     for column_index, label in _month_labels(grid):
         x = GRID_LEFT + column_index * STEP
         parts.append(
-            f'<text x="{x}" y="98" class="faint" font-size="7.5">{label}</text>'
+            f'<text x="{x}" y="{month_label_y}" class="faint" font-size="7.5">{label}</text>'
         )
 
     for row, name in ((1, "M"), (3, "W"), (5, "F")):
-        y = GRID_TOP + row * STEP + 8
+        y = grid_top + row * STEP + 8
         parts.append(
             f'<text x="34" y="{y}" class="faint" font-size="7.5">{name}</text>'
         )
@@ -186,7 +188,7 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
             if cell is None:
                 continue
             date, count, level = cell
-            y = GRID_TOP + row_index * STEP
+            y = grid_top + row_index * STEP
             delay = 0.16 + column_index * 0.012 + row_index * 0.025
             plural = "" if count == 1 else "s"
             parts.append(
@@ -196,8 +198,7 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
                 f"<title>{esc(date)}: {count} contribution{plural}</title></rect>"
             )
 
-    legend_x = 774
-    legend_y = 199
+    legend_x = 700
     parts.append(
         f'<text x="{legend_x - 10}" y="{legend_y + 8}" class="faint" '
         'font-size="7.5" text-anchor="end">LESS</text>'
@@ -220,10 +221,10 @@ def render(data: dict[str, Any], theme_name: str) -> list[str]:
 
     parts.extend(
         [
-            _stat_card(32, "CONTRIBUTIONS", f"{total:,}", "last 12 months", "green", 0.38),
-            _stat_card(231, "ACTIVE DAYS", str(active), f"{average} avg / active day", "cyan", 0.46),
-            _stat_card(430, "CURRENT STREAK", f"{current}d", "ongoing", "violet", 0.54),
-            _stat_card(629, "LONGEST STREAK", f"{longest}d", "best stretch", "green", 0.62),
+            _stat_card(32, stat_y, "CONTRIBUTIONS", f"{total:,}", "last 12 months", "green", 0.38),
+            _stat_card(231, stat_y, "ACTIVE DAYS", str(active), f"{average} avg / active day", "cyan", 0.46),
+            _stat_card(430, stat_y, "CURRENT STREAK", f"{current}d", "ongoing", "violet", 0.54),
+            _stat_card(629, stat_y, "LONGEST STREAK", f"{longest}d", "best stretch", "green", 0.62),
         ]
     )
 
